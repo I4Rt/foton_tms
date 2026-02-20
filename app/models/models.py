@@ -3,16 +3,17 @@ from decimal import Decimal
 from typing import Optional, List
 import uuid
 from sqlalchemy import (
-    String, Boolean, DECIMAL, Text, ForeignKey, Date, 
+    String, Boolean, DECIMAL, Text, ForeignKey, Date,
     CheckConstraint, Index, UniqueConstraint, TIMESTAMP
 )
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.dialects.postgresql import UUID, JSONB, INET
 from app.core.database import Base
 from app.models.enums import (
-    UserRole, WorkItemType, WorkItemState, Priority, 
+    UserRole, WorkItemType, WorkItemState, Priority,
     IterationState, NonWorkingDayType
 )
+
 
 class User(Base):
     __tablename__ = "users"
@@ -33,12 +34,14 @@ class User(Base):
     project_memberships: Mapped[List["ProjectMember"]] = relationship(back_populates="user", foreign_keys="ProjectMember.user_id")
     assigned_work_items: Mapped[List["WorkItem"]] = relationship(back_populates="assignee", foreign_keys="WorkItem.assigned_to")
     non_working_days: Mapped[List["NonWorkingDay"]] = relationship(back_populates="user")
+    work_sessions: Mapped[List["WorkSession"]] = relationship(back_populates="user")
 
     __table_args__ = (
         CheckConstraint("capacity_per_day > 0 AND capacity_per_day <= 24", name="chk_capacity_range"),
         Index("idx_users_email", "email"),
         Index("idx_users_role", "role"),
     )
+
 
 class Project(Base):
     __tablename__ = "projects"
@@ -63,14 +66,17 @@ class Project(Base):
         Index("idx_projects_is_active", "is_active"),
     )
 
+
 class ProjectMember(Base):
     __tablename__ = "project_members"
 
-    project_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), ForeignKey("projects.id", ondelete="CASCADE"), primary_key=True)
+    project_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("projects.id", ondelete="CASCADE"), primary_key=True
+    )
     user_id: Mapped[uuid.UUID] = mapped_column(
         UUID(as_uuid=True),
         ForeignKey("users.id", ondelete="CASCADE"),
-        nullable=False,
+        primary_key=True,
     )
     added_by: Mapped[uuid.UUID] = mapped_column(
         UUID(as_uuid=True),
@@ -87,6 +93,7 @@ class ProjectMember(Base):
         Index("idx_project_members_user_id", "user_id"),
         Index("idx_project_members_project_id", "project_id"),
     )
+
 
 class Iteration(Base):
     __tablename__ = "iterations"
@@ -105,13 +112,13 @@ class Iteration(Base):
     # Relationships
     project: Mapped["Project"] = relationship(back_populates="iterations")
     work_items: Mapped[List["WorkItem"]] = relationship(back_populates="iteration")
-    drop_plan_items: Mapped[List["DropPlanItem"]] = relationship(back_populates="iteration", cascade="all, delete-orphan")
 
     __table_args__ = (
         CheckConstraint("end_date > start_date", name="chk_iteration_dates"),
         Index("idx_iterations_project_id", "project_id"),
         Index("idx_iterations_state", "state"),
     )
+
 
 class WorkItem(Base):
     __tablename__ = "work_items"
@@ -130,23 +137,26 @@ class WorkItem(Base):
     parent_id: Mapped[Optional[uuid.UUID]] = mapped_column(UUID(as_uuid=True), ForeignKey("work_items.id", ondelete="CASCADE"))
     iteration_id: Mapped[Optional[uuid.UUID]] = mapped_column(UUID(as_uuid=True), ForeignKey("iterations.id", ondelete="SET NULL"))
     estimation_hours: Mapped[Optional[Decimal]] = mapped_column(DECIMAL(10, 2))
-    remaining_hours: Mapped[Optional[Decimal]] = mapped_column(DECIMAL(10, 2))
-    completed_hours: Mapped[Decimal] = mapped_column(DECIMAL(10, 2), default=0, nullable=False)
     tags: Mapped[list] = mapped_column(JSONB, default=list, nullable=False)
+    start_date: Mapped[Optional[date]] = mapped_column(Date)
+    end_date: Mapped[Optional[date]] = mapped_column(Date)
 
     # Relationships
     project: Mapped["Project"] = relationship(back_populates="work_items")
     assignee: Mapped[Optional["User"]] = relationship(back_populates="assigned_work_items", foreign_keys=[assigned_to])
     iteration: Mapped[Optional["Iteration"]] = relationship(back_populates="work_items")
     parent: Mapped[Optional["WorkItem"]] = relationship(back_populates="children", remote_side=[id])
-    children: Mapped[List["WorkItem"]] = relationship(back_populates="parent")
-    drop_plan_items: Mapped[List["DropPlanItem"]] = relationship(back_populates="work_item", cascade="all, delete-orphan")
+    children: Mapped[List["WorkItem"]] = relationship(back_populates="parent", cascade="all, delete-orphan")
+    work_sessions: Mapped[List["WorkSession"]] = relationship(back_populates="work_item", cascade="all, delete-orphan")
 
     __table_args__ = (
         CheckConstraint("length(title) >= 3", name="chk_workitem_title_length"),
         CheckConstraint("estimation_hours > 0 OR estimation_hours IS NULL", name="chk_estimation_positive"),
-        CheckConstraint("remaining_hours >= 0 OR remaining_hours IS NULL", name="chk_remaining_positive"),
-        CheckConstraint("completed_hours >= 0", name="chk_completed_positive"),
+        CheckConstraint(
+            "(start_date IS NULL AND end_date IS NULL) OR "
+            "(start_date IS NOT NULL AND end_date IS NOT NULL AND end_date >= start_date)",
+            name="chk_task_dates"
+        ),
         Index("idx_workitems_project_id", "project_id"),
         Index("idx_workitems_parent_id", "parent_id"),
         Index("idx_workitems_iteration_id", "iteration_id"),
@@ -155,28 +165,31 @@ class WorkItem(Base):
         Index("idx_workitems_state", "state"),
     )
 
-class DropPlanItem(Base):
-    __tablename__ = "drop_plan_items"
+
+class WorkSession(Base):
+    __tablename__ = "work_sessions"
 
     id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    iteration_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), ForeignKey("iterations.id", ondelete="CASCADE"), nullable=False)
     work_item_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), ForeignKey("work_items.id", ondelete="CASCADE"), nullable=False)
-    assigned_user_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), ForeignKey("users.id", ondelete="RESTRICT"), nullable=False)
-    planned_date: Mapped[date] = mapped_column(Date, nullable=False)
-    order_index: Mapped[int] = mapped_column(default=0, nullable=False)
+    user_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
+    description: Mapped[Optional[str]] = mapped_column(Text)
+    started_at: Mapped[datetime] = mapped_column(TIMESTAMP(timezone=True), nullable=False)
+    ended_at: Mapped[Optional[datetime]] = mapped_column(TIMESTAMP(timezone=True))
+    total_hours: Mapped[Optional[Decimal]] = mapped_column(DECIMAL(10, 2))
     created_date: Mapped[datetime] = mapped_column(TIMESTAMP(timezone=True), default=datetime.utcnow, nullable=False)
-    modified_date: Mapped[datetime] = mapped_column(TIMESTAMP(timezone=True), default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
 
     # Relationships
-    iteration: Mapped["Iteration"] = relationship(back_populates="drop_plan_items")
-    work_item: Mapped["WorkItem"] = relationship(back_populates="drop_plan_items")
+    work_item: Mapped["WorkItem"] = relationship(back_populates="work_sessions")
+    user: Mapped["User"] = relationship(back_populates="work_sessions")
 
     __table_args__ = (
-        UniqueConstraint("work_item_id", "iteration_id", name="uq_dropplan_workitem_iteration"),
-        Index("idx_dropplan_iteration_id", "iteration_id"),
-        Index("idx_dropplan_assigned_user_id", "assigned_user_id"),
-        Index("idx_dropplan_planned_date", "planned_date"),
+        CheckConstraint("ended_at IS NULL OR ended_at > started_at", name="chk_session_dates"),
+        CheckConstraint("total_hours IS NULL OR total_hours > 0", name="chk_session_hours_positive"),
+        Index("idx_sessions_work_item_id", "work_item_id"),
+        Index("idx_sessions_user_id", "user_id"),
+        Index("idx_sessions_started_at", "started_at"),
     )
+
 
 class Holiday(Base):
     __tablename__ = "holidays"
@@ -187,6 +200,7 @@ class Holiday(Base):
     created_date: Mapped[datetime] = mapped_column(TIMESTAMP(timezone=True), default=datetime.utcnow, nullable=False)
 
     __table_args__ = (Index("idx_holidays_date", "date"),)
+
 
 class NonWorkingDay(Base):
     __tablename__ = "non_working_days"
@@ -206,6 +220,7 @@ class NonWorkingDay(Base):
         Index("idx_nonworking_user_id", "user_id"),
         Index("idx_nonworking_date", "date"),
     )
+
 
 class AuditLog(Base):
     __tablename__ = "audit_log"

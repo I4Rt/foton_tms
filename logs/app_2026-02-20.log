@@ -1,0 +1,374 @@
+2026-02-20 11:33:11 | INFO     | main:lifespan:15 - Starting application...
+2026-02-20 11:33:12 | INFO     | main:lifespan:20 - Database tables created/verified
+2026-02-20 11:34:18 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 11:34:46 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 11:34:46 | INFO     | app.api.v1.projects:create_project:103 - Project created: Проект 1 by admin@example.com
+2026-02-20 11:35:07 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 11:35:23 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 11:35:44 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 11:36:12 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 11:36:12 | INFO     | app.api.v1.projects:update_project:130 - Project updated: Проект 1 by admin@example.com
+2026-02-20 11:36:36 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 11:37:01 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 11:37:59 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 11:37:59 | INFO     | app.api.v1.projects:add_project_member:214 - Member first_user@gmail.com added to project 876bc03c-c4fe-4496-82b5-c1e348ff2691 by admin@example.com
+2026-02-20 11:38:09 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 11:38:21 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 11:38:53 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 11:38:53 | INFO     | app.api.v1.projects:remove_project_member:247 - Member 6e09ba40-7909-4d9a-bdd7-187cd4de1fc4 removed from project 876bc03c-c4fe-4496-82b5-c1e348ff2691 by admin@example.com
+2026-02-20 11:39:49 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 11:39:57 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 11:40:13 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 11:40:13 | INFO     | app.api.v1.projects:add_project_member:214 - Member first_user@gmail.com added to project 876bc03c-c4fe-4496-82b5-c1e348ff2691 by admin@example.com
+2026-02-20 11:40:27 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 11:41:10 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 11:41:15 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 11:41:35 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 11:41:35 | INFO     | app.api.v1.projects:add_project_member:214 - Member admin@example.com added to project 876bc03c-c4fe-4496-82b5-c1e348ff2691 by admin@example.com
+2026-02-20 11:41:40 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 11:41:50 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 11:41:50 | INFO     | app.api.v1.projects:remove_project_member:247 - Member 6e09ba40-7909-4d9a-bdd7-187cd4de1fc4 removed from project 876bc03c-c4fe-4496-82b5-c1e348ff2691 by admin@example.com
+2026-02-20 11:41:59 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 12:17:39 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 12:17:39 | INFO     | app.api.v1.projects:add_project_member:214 - Member admin@example.com added to project 876bc03c-c4fe-4496-82b5-c1e348ff2691 by admin@example.com
+2026-02-20 12:17:42 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 12:17:44 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 12:18:38 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 12:18:54 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 12:18:54 | INFO     | app.api.v1.projects:add_project_member:214 - Member first_user@gmail.com added to project 876bc03c-c4fe-4496-82b5-c1e348ff2691 by admin@example.com
+2026-02-20 12:18:58 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 12:19:05 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 12:19:05 | INFO     | app.api.v1.projects:remove_project_member:247 - Member a53b1df8-de66-4da6-97da-fb51750285be removed from project 876bc03c-c4fe-4496-82b5-c1e348ff2691 by admin@example.com
+2026-02-20 12:19:11 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 12:22:18 | INFO     | main:lifespan:24 - Shutting down application...
+2026-02-20 12:22:18 | INFO     | main:lifespan:15 - Starting application...
+2026-02-20 12:22:18 | INFO     | main:lifespan:20 - Database tables created/verified
+2026-02-20 12:22:22 | INFO     | main:lifespan:24 - Shutting down application...
+2026-02-20 12:22:25 | INFO     | main:lifespan:15 - Starting application...
+2026-02-20 12:22:25 | INFO     | main:lifespan:20 - Database tables created/verified
+2026-02-20 12:22:56 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 12:22:56 | INFO     | app.api.v1.projects:add_project_member:214 - Member first_user@gmail.com added to project 876bc03c-c4fe-4496-82b5-c1e348ff2691 by admin@example.com
+2026-02-20 12:23:00 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 12:23:00 | INFO     | app.api.v1.projects:add_project_member:214 - Member admin@example.com added to project 876bc03c-c4fe-4496-82b5-c1e348ff2691 by admin@example.com
+2026-02-20 12:23:07 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 12:23:18 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 12:23:18 | INFO     | app.api.v1.projects:remove_project_member:247 - Member 6e09ba40-7909-4d9a-bdd7-187cd4de1fc4 removed from project 876bc03c-c4fe-4496-82b5-c1e348ff2691 by admin@example.com
+2026-02-20 12:23:22 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 12:25:05 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 12:25:30 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 12:27:35 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 12:27:50 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 12:27:50 | INFO     | app.api.v1.workitems:create_work_item:154 - Work item created: Эпик - 1 by admin@example.com
+2026-02-20 12:28:23 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 12:29:08 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 12:32:51 | INFO     | main:lifespan:24 - Shutting down application...
+2026-02-20 12:32:53 | INFO     | main:lifespan:15 - Starting application...
+2026-02-20 12:32:53 | INFO     | main:lifespan:20 - Database tables created/verified
+2026-02-20 12:33:26 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 12:39:30 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 12:39:44 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 12:41:29 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 12:43:33 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 12:43:33 | INFO     | app.api.v1.workitems:create_work_item:154 - Work item created: test_epic_2_epic by admin@example.com
+2026-02-20 12:43:58 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 12:47:37 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 12:48:24 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 12:49:12 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 12:49:12 | INFO     | app.api.v1.workitems:update_work_item:185 - Work item updated: test_epic_2_epic by admin@example.com
+2026-02-20 13:10:27 | INFO     | main:lifespan:24 - Shutting down application...
+2026-02-20 13:10:29 | INFO     | main:lifespan:15 - Starting application...
+2026-02-20 13:10:30 | INFO     | main:lifespan:20 - Database tables created/verified
+2026-02-20 13:21:13 | INFO     | main:lifespan:24 - Shutting down application...
+2026-02-20 13:21:15 | INFO     | main:lifespan:15 - Starting application...
+2026-02-20 13:21:15 | INFO     | main:lifespan:20 - Database tables created/verified
+2026-02-20 13:24:28 | INFO     | main:lifespan:24 - Shutting down application...
+2026-02-20 13:24:30 | INFO     | main:lifespan:15 - Starting application...
+2026-02-20 13:24:30 | INFO     | main:lifespan:20 - Database tables created/verified
+2026-02-20 13:29:21 | INFO     | main:lifespan:24 - Shutting down application...
+2026-02-20 13:29:23 | INFO     | main:lifespan:15 - Starting application...
+2026-02-20 13:29:23 | INFO     | main:lifespan:20 - Database tables created/verified
+2026-02-20 13:31:24 | INFO     | main:lifespan:24 - Shutting down application...
+2026-02-20 13:31:26 | INFO     | main:lifespan:15 - Starting application...
+2026-02-20 13:31:26 | INFO     | main:lifespan:20 - Database tables created/verified
+2026-02-20 13:31:32 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 13:32:06 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 13:32:06 | INFO     | app.api.v1.workitems:update_work_item:253 - Work item updated: test_epic_2_epic by admin@example.com
+2026-02-20 13:32:32 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 13:32:43 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 13:32:43 | INFO     | app.api.v1.workitems:update_work_item:253 - Work item updated: test_epic_2_epic by admin@example.com
+2026-02-20 13:33:33 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 13:33:33 | INFO     | app.api.v1.workitems:update_work_item:253 - Work item updated: test_epic_2_epic by admin@example.com
+2026-02-20 13:33:42 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 13:40:06 | INFO     | main:lifespan:24 - Shutting down application...
+2026-02-20 13:40:08 | INFO     | main:lifespan:15 - Starting application...
+2026-02-20 13:40:08 | INFO     | main:lifespan:20 - Database tables created/verified
+2026-02-20 13:42:15 | INFO     | main:lifespan:24 - Shutting down application...
+2026-02-20 13:42:17 | INFO     | main:lifespan:15 - Starting application...
+2026-02-20 13:42:17 | INFO     | main:lifespan:20 - Database tables created/verified
+2026-02-20 13:42:37 | INFO     | main:lifespan:24 - Shutting down application...
+2026-02-20 13:42:39 | INFO     | main:lifespan:15 - Starting application...
+2026-02-20 13:42:39 | INFO     | main:lifespan:20 - Database tables created/verified
+2026-02-20 13:42:43 | INFO     | main:lifespan:24 - Shutting down application...
+2026-02-20 13:42:44 | INFO     | main:lifespan:15 - Starting application...
+2026-02-20 13:42:44 | INFO     | main:lifespan:20 - Database tables created/verified
+2026-02-20 13:45:13 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 13:45:13 | INFO     | app.api.v1.workitems:update_work_item:272 - Work item updated: Эпик - 1 by admin@example.com
+2026-02-20 13:45:21 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 13:45:55 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 13:45:55 | INFO     | app.api.v1.workitems:delete_work_item:298 - Work item deleted: Эпик - 1 by admin@example.com
+2026-02-20 13:46:04 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 13:46:59 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 13:48:24 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 13:48:24 | ERROR    | main:global_exception_handler:47 - Unhandled exception: (sqlalchemy.dialects.postgresql.asyncpg.IntegrityError) <class 'asyncpg.exceptions.ForeignKeyViolationError'>: insert or update on table "iterations" violates foreign key constraint "iterations_project_id_fkey"
+DETAIL:  Key (project_id)=(6e09ba40-7909-4d9a-bdd7-187cd4de1fc4) is not present in table "projects".
+[SQL: INSERT INTO iterations (id, project_id, name, start_date, end_date, state, goal, working_days, created_date, modified_date) VALUES ($1::UUID, $2::UUID, $3::VARCHAR, $4::DATE, $5::DATE, $6::VARCHAR, $7::VARCHAR, $8::JSONB, $9::TIMESTAMP WITH TIME ZONE, $10::TIMESTAMP WITH TIME ZONE)]
+[parameters: (UUID('8773c984-9b47-4032-8941-007bf050170e'), UUID('6e09ba40-7909-4d9a-bdd7-187cd4de1fc4'), 'Спринт -1', datetime.date(2026, 2, 20), datetime.date(2026, 2, 27), <IterationState.FUTURE: 'Future'>, 'Проверить работоспособность', '["2026-02-20", "2026-02-24", "2026-02-25", "2026-02-26", "2026-02-27"]', datetime.datetime(2026, 2, 20, 6, 48, 24, 600964), datetime.datetime(2026, 2, 20, 6, 48, 24, 600970))]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2026-02-20 13:49:35 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 13:49:35 | INFO     | app.api.v1.iterations:create_iteration:69 - Iteration created: Спринт - 1 by admin@example.com
+2026-02-20 13:49:47 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 13:49:47 | ERROR    | main:global_exception_handler:47 - Unhandled exception: (sqlalchemy.dialects.postgresql.asyncpg.IntegrityError) <class 'asyncpg.exceptions.ForeignKeyViolationError'>: insert or update on table "iterations" violates foreign key constraint "iterations_project_id_fkey"
+DETAIL:  Key (project_id)=(6e09ba40-7909-4d9a-bdd7-187cd4de1fc4) is not present in table "projects".
+[SQL: INSERT INTO iterations (id, project_id, name, start_date, end_date, state, goal, working_days, created_date, modified_date) VALUES ($1::UUID, $2::UUID, $3::VARCHAR, $4::DATE, $5::DATE, $6::VARCHAR, $7::VARCHAR, $8::JSONB, $9::TIMESTAMP WITH TIME ZONE, $10::TIMESTAMP WITH TIME ZONE)]
+[parameters: (UUID('c06d14bd-d8c1-476c-afe7-fc96ba3833bd'), UUID('6e09ba40-7909-4d9a-bdd7-187cd4de1fc4'), 'Спринт - 1', datetime.date(2026, 2, 20), datetime.date(2026, 2, 27), <IterationState.FUTURE: 'Future'>, 'Проверить работоспособность', '["2026-02-20", "2026-02-24", "2026-02-25", "2026-02-26", "2026-02-27"]', datetime.datetime(2026, 2, 20, 6, 49, 47, 294249), datetime.datetime(2026, 2, 20, 6, 49, 47, 294252))]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2026-02-20 13:52:17 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 13:52:17 | INFO     | app.api.v1.iterations:create_iteration:69 - Iteration created: Спринт - 1 by admin@example.com
+2026-02-20 13:53:10 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 13:55:33 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 13:55:33 | INFO     | app.api.v1.iterations:update_iteration:101 - Iteration updated: Спринт - 2 by admin@example.com
+2026-02-20 13:56:12 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 13:56:12 | INFO     | app.api.v1.iterations:update_iteration:101 - Iteration updated: Спринт - 2 by admin@example.com
+2026-02-20 14:12:50 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 14:12:50 | INFO     | app.api.v1.workitems:create_work_item:223 - Work item created: Эпик - 1 by admin@example.com
+2026-02-20 14:13:24 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 14:13:49 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 14:13:49 | INFO     | app.api.v1.iterations:delete_iteration:125 - Iteration deleted: Спринт - 2 by admin@example.com
+2026-02-20 14:14:13 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 14:14:31 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 14:18:40 | INFO     | main:lifespan:24 - Shutting down application...
+2026-02-20 14:18:42 | INFO     | main:lifespan:15 - Starting application...
+2026-02-20 14:18:42 | INFO     | main:lifespan:20 - Database tables created/verified
+2026-02-20 14:18:50 | INFO     | main:lifespan:24 - Shutting down application...
+2026-02-20 14:18:51 | INFO     | main:lifespan:15 - Starting application...
+2026-02-20 14:18:51 | INFO     | main:lifespan:20 - Database tables created/verified
+2026-02-20 14:19:46 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 14:20:20 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 14:20:42 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 14:20:56 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 14:21:17 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 14:38:34 | INFO     | main:lifespan:24 - Shutting down application...
+2026-02-20 14:38:36 | INFO     | main:lifespan:15 - Starting application...
+2026-02-20 14:38:36 | INFO     | main:lifespan:20 - Database tables created/verified
+2026-02-20 14:40:15 | INFO     | main:lifespan:24 - Shutting down application...
+2026-02-20 14:40:17 | INFO     | main:lifespan:15 - Starting application...
+2026-02-20 14:40:17 | INFO     | main:lifespan:20 - Database tables created/verified
+2026-02-20 14:40:59 | INFO     | main:lifespan:24 - Shutting down application...
+2026-02-20 14:41:12 | INFO     | main:lifespan:15 - Starting application...
+2026-02-20 14:41:12 | INFO     | main:lifespan:20 - Database tables created/verified
+2026-02-20 14:42:22 | INFO     | main:lifespan:24 - Shutting down application...
+2026-02-20 14:42:23 | INFO     | main:lifespan:15 - Starting application...
+2026-02-20 14:42:23 | INFO     | main:lifespan:20 - Database tables created/verified
+2026-02-20 14:43:02 | INFO     | main:lifespan:24 - Shutting down application...
+2026-02-20 14:43:17 | INFO     | main:lifespan:15 - Starting application...
+2026-02-20 14:43:17 | INFO     | main:lifespan:20 - Database tables created/verified
+2026-02-20 16:40:48 | ERROR    | main:global_exception_handler:47 - Unhandled exception: Mapper 'Mapper[WorkItem(work_items)]' has no property 'drop_plan_items'.  If this property was indicated from other mappers or configure events, ensure registry.configure() has been called.
+2026-02-20 16:41:08 | INFO     | main:lifespan:15 - Starting application...
+2026-02-20 16:41:08 | INFO     | main:lifespan:20 - Database tables created/verified
+2026-02-20 16:41:11 | ERROR    | main:global_exception_handler:47 - Unhandled exception: Mapper 'Mapper[WorkItem(work_items)]' has no property 'drop_plan_items'.  If this property was indicated from other mappers or configure events, ensure registry.configure() has been called.
+2026-02-20 16:41:56 | ERROR    | main:global_exception_handler:47 - Unhandled exception: One or more mappers failed to initialize - can't proceed with initialization of other mappers. Triggering mapper: 'Mapper[DropPlanItem(drop_plan_items)]'. Original exception was: Mapper 'Mapper[WorkItem(work_items)]' has no property 'drop_plan_items'.  If this property was indicated from other mappers or configure events, ensure registry.configure() has been called.
+2026-02-20 16:45:57 | INFO     | main:lifespan:24 - Shutting down application...
+2026-02-20 16:45:59 | INFO     | main:lifespan:15 - Starting application...
+2026-02-20 16:45:59 | INFO     | main:lifespan:20 - Database tables created/verified
+2026-02-20 16:46:02 | INFO     | main:lifespan:24 - Shutting down application...
+2026-02-20 16:46:06 | INFO     | main:lifespan:15 - Starting application...
+2026-02-20 16:46:06 | INFO     | main:lifespan:20 - Database tables created/verified
+2026-02-20 16:46:10 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 16:46:35 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 16:46:48 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 16:46:48 | ERROR    | main:global_exception_handler:47 - Unhandled exception: (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.UndefinedColumnError'>: column work_items.start_date does not exist
+[SQL: SELECT work_items.id, work_items.project_id, work_items.type, work_items.title, work_items.description, work_items.state, work_items.priority, work_items.assigned_to, work_items.created_by, work_items.created_date, work_items.modified_date, work_items.parent_id, work_items.iteration_id, work_items.estimation_hours, work_items.remaining_hours, work_items.completed_hours, work_items.tags, work_items.start_date, work_items.end_date 
+FROM work_items 
+WHERE work_items.iteration_id = $1::UUID AND work_items.type = $2::VARCHAR ORDER BY work_items.start_date, work_items.title]
+[parameters: (UUID('3b197d17-5acb-43ee-a62d-faf162bb429d'), <WorkItemType.TASK: 'Task'>)]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2026-02-20 16:51:14 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 16:51:19 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 16:52:36 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 16:55:03 | INFO     | main:lifespan:24 - Shutting down application...
+2026-02-20 16:55:05 | INFO     | main:lifespan:15 - Starting application...
+2026-02-20 16:55:05 | INFO     | main:lifespan:20 - Database tables created/verified
+2026-02-20 16:55:23 | INFO     | main:lifespan:24 - Shutting down application...
+2026-02-20 16:55:25 | INFO     | main:lifespan:15 - Starting application...
+2026-02-20 16:55:25 | INFO     | main:lifespan:20 - Database tables created/verified
+2026-02-20 16:58:37 | INFO     | main:lifespan:24 - Shutting down application...
+2026-02-20 16:58:39 | INFO     | main:lifespan:15 - Starting application...
+2026-02-20 16:58:39 | INFO     | main:lifespan:20 - Database tables created/verified
+2026-02-20 16:58:58 | INFO     | main:lifespan:24 - Shutting down application...
+2026-02-20 16:58:59 | INFO     | main:lifespan:15 - Starting application...
+2026-02-20 16:58:59 | INFO     | main:lifespan:20 - Database tables created/verified
+2026-02-20 16:59:00 | INFO     | main:lifespan:24 - Shutting down application...
+2026-02-20 16:59:02 | INFO     | main:lifespan:15 - Starting application...
+2026-02-20 16:59:02 | INFO     | main:lifespan:20 - Database tables created/verified
+2026-02-20 16:59:04 | INFO     | main:lifespan:24 - Shutting down application...
+2026-02-20 16:59:06 | INFO     | main:lifespan:15 - Starting application...
+2026-02-20 16:59:06 | INFO     | main:lifespan:20 - Database tables created/verified
+2026-02-20 16:59:11 | INFO     | main:lifespan:24 - Shutting down application...
+2026-02-20 16:59:11 | INFO     | main:lifespan:15 - Starting application...
+2026-02-20 16:59:11 | INFO     | main:lifespan:20 - Database tables created/verified
+2026-02-20 17:01:34 | INFO     | main:lifespan:24 - Shutting down application...
+2026-02-20 17:02:53 | INFO     | main:lifespan:15 - Starting application...
+2026-02-20 17:02:53 | INFO     | main:lifespan:20 - Database tables created/verified
+2026-02-20 17:02:53 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 17:03:47 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 17:04:12 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 17:04:57 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 17:05:19 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 17:05:29 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 17:05:29 | INFO     | app.api.v1.workitems:create_work_item:232 - Work item created: Feature - 1 by admin@example.com
+2026-02-20 17:05:49 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 17:06:05 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 17:06:05 | INFO     | app.api.v1.workitems:create_work_item:232 - Work item created: UserStory - 1 by admin@example.com
+2026-02-20 17:06:24 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 17:06:41 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 17:06:41 | INFO     | app.api.v1.workitems:create_work_item:232 - Work item created: Task - 1 by admin@example.com
+2026-02-20 17:06:50 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 17:06:50 | INFO     | app.api.v1.workitems:create_work_item:232 - Work item created: Task - 2 by admin@example.com
+2026-02-20 17:06:58 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 17:06:58 | INFO     | app.api.v1.workitems:create_work_item:232 - Work item created: Task - 3 by admin@example.com
+2026-02-20 17:07:12 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 17:07:56 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 17:08:36 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 17:08:36 | INFO     | app.api.v1.projects:add_project_member:214 - Member admin@example.com added to project 876bc03c-c4fe-4496-82b5-c1e348ff2691 by admin@example.com
+2026-02-20 17:08:57 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 17:11:16 | INFO     | main:lifespan:24 - Shutting down application...
+2026-02-20 17:11:18 | INFO     | main:lifespan:15 - Starting application...
+2026-02-20 17:11:18 | INFO     | main:lifespan:20 - Database tables created/verified
+2026-02-20 17:13:53 | INFO     | main:lifespan:24 - Shutting down application...
+2026-02-20 17:13:54 | INFO     | main:lifespan:15 - Starting application...
+2026-02-20 17:13:54 | INFO     | main:lifespan:20 - Database tables created/verified
+2026-02-20 17:16:43 | INFO     | main:lifespan:24 - Shutting down application...
+2026-02-20 17:16:44 | INFO     | main:lifespan:15 - Starting application...
+2026-02-20 17:16:44 | INFO     | main:lifespan:20 - Database tables created/verified
+2026-02-20 17:18:49 | INFO     | main:lifespan:24 - Shutting down application...
+2026-02-20 17:19:24 | INFO     | main:lifespan:15 - Starting application...
+2026-02-20 17:19:24 | INFO     | main:lifespan:20 - Database tables created/verified
+2026-02-20 17:19:58 | INFO     | main:lifespan:24 - Shutting down application...
+2026-02-20 17:19:59 | INFO     | main:lifespan:15 - Starting application...
+2026-02-20 17:19:59 | INFO     | main:lifespan:20 - Database tables created/verified
+2026-02-20 17:20:12 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 17:20:24 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 17:20:35 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 17:21:21 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 17:21:34 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 17:21:40 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 17:22:48 | INFO     | main:lifespan:24 - Shutting down application...
+2026-02-20 17:22:50 | INFO     | main:lifespan:15 - Starting application...
+2026-02-20 17:22:50 | INFO     | main:lifespan:20 - Database tables created/verified
+2026-02-20 17:34:37 | INFO     | main:lifespan:24 - Shutting down application...
+2026-02-20 17:34:39 | INFO     | main:lifespan:15 - Starting application...
+2026-02-20 17:34:39 | INFO     | main:lifespan:20 - Database tables created/verified
+2026-02-20 17:37:54 | INFO     | main:lifespan:24 - Shutting down application...
+2026-02-20 17:37:56 | INFO     | main:lifespan:15 - Starting application...
+2026-02-20 17:37:56 | INFO     | main:lifespan:20 - Database tables created/verified
+2026-02-20 17:39:38 | INFO     | main:lifespan:24 - Shutting down application...
+2026-02-20 17:39:40 | INFO     | main:lifespan:15 - Starting application...
+2026-02-20 17:39:40 | INFO     | main:lifespan:20 - Database tables created/verified
+2026-02-20 17:41:57 | INFO     | main:lifespan:24 - Shutting down application...
+2026-02-20 17:41:58 | INFO     | main:lifespan:15 - Starting application...
+2026-02-20 17:41:58 | INFO     | main:lifespan:20 - Database tables created/verified
+2026-02-20 17:43:08 | INFO     | main:lifespan:24 - Shutting down application...
+2026-02-20 17:43:10 | INFO     | main:lifespan:15 - Starting application...
+2026-02-20 17:43:10 | INFO     | main:lifespan:20 - Database tables created/verified
+2026-02-20 17:43:11 | INFO     | main:lifespan:24 - Shutting down application...
+2026-02-20 17:43:13 | INFO     | main:lifespan:15 - Starting application...
+2026-02-20 17:43:13 | INFO     | main:lifespan:20 - Database tables created/verified
+2026-02-20 17:43:39 | INFO     | main:lifespan:24 - Shutting down application...
+2026-02-20 17:43:40 | INFO     | main:lifespan:19 - Starting application...
+2026-02-20 17:43:40 | INFO     | main:lifespan:24 - Database tables created/verified
+2026-02-20 17:44:46 | INFO     | main:lifespan:28 - Shutting down application...
+2026-02-20 17:44:45 | INFO     | main:lifespan:19 - Starting application...
+2026-02-20 17:44:45 | INFO     | main:lifespan:24 - Database tables created/verified
+2026-02-20 17:48:13 | INFO     | main:lifespan:28 - Shutting down application...
+2026-02-20 17:48:14 | INFO     | main:lifespan:19 - Starting application...
+2026-02-20 17:48:14 | INFO     | main:lifespan:24 - Database tables created/verified
+2026-02-20 17:51:14 | INFO     | main:lifespan:28 - Shutting down application...
+2026-02-20 17:51:15 | INFO     | main:lifespan:19 - Starting application...
+2026-02-20 17:51:15 | INFO     | main:lifespan:24 - Database tables created/verified
+2026-02-20 17:51:53 | INFO     | main:lifespan:28 - Shutting down application...
+2026-02-20 17:51:55 | INFO     | main:lifespan:19 - Starting application...
+2026-02-20 17:51:55 | INFO     | main:lifespan:24 - Database tables created/verified
+2026-02-20 17:53:19 | INFO     | main:lifespan:28 - Shutting down application...
+2026-02-20 17:53:21 | INFO     | main:lifespan:19 - Starting application...
+2026-02-20 17:53:21 | INFO     | main:lifespan:24 - Database tables created/verified
+2026-02-20 17:53:32 | INFO     | main:lifespan:28 - Shutting down application...
+2026-02-20 17:53:33 | INFO     | main:lifespan:19 - Starting application...
+2026-02-20 17:53:33 | INFO     | main:lifespan:24 - Database tables created/verified
+2026-02-20 17:53:35 | INFO     | main:lifespan:28 - Shutting down application...
+2026-02-20 17:53:37 | INFO     | main:lifespan:19 - Starting application...
+2026-02-20 17:53:37 | INFO     | main:lifespan:24 - Database tables created/verified
+2026-02-20 17:55:53 | INFO     | main:lifespan:28 - Shutting down application...
+2026-02-20 17:56:05 | INFO     | main:lifespan:19 - Starting application...
+2026-02-20 17:56:20 | INFO     | main:lifespan:19 - Starting application...
+2026-02-20 17:56:20 | INFO     | main:lifespan:24 - Database tables created/verified
+2026-02-20 18:30:31 | WARNING  | app.core.security:get_current_user:30 - Failed login attempt for: admin@example.com
+2026-02-20 18:30:54 | WARNING  | app.core.security:get_current_user:30 - Failed login attempt for: admin@example.com
+2026-02-20 18:31:03 | WARNING  | app.core.security:get_current_user:30 - Failed login attempt for: admin@example.com
+2026-02-20 18:31:13 | WARNING  | app.core.security:get_current_user:30 - Failed login attempt for: admin@example.com
+2026-02-20 18:32:10 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 18:35:12 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 18:35:22 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 18:35:22 | INFO     | app.api.v1.users:create_user:69 - User created: markov.vlaimir@s-pl.ru by admin@example.com
+2026-02-20 18:36:10 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 18:36:10 | INFO     | app.api.v1.projects:create_project:104 - Project created: Проект - 1 by admin@example.com
+2026-02-20 18:36:26 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 18:36:51 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 18:36:51 | INFO     | app.api.v1.projects:add_project_member:215 - Member markov.vlaimir@s-pl.ru added to project 9595ede4-9b68-47dd-bf89-fcb7fe5f3306 by admin@example.com
+2026-02-20 18:37:01 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 18:39:03 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 18:39:03 | INFO     | app.api.v1.iterations:create_iteration:133 - Iteration created: Спринт - 1 by admin@example.com
+2026-02-20 18:43:11 | INFO     | main:lifespan:28 - Shutting down application...
+2026-02-20 18:43:13 | INFO     | main:lifespan:19 - Starting application...
+2026-02-20 18:43:13 | INFO     | main:lifespan:24 - Database tables created/verified
+2026-02-20 18:44:16 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 18:44:16 | INFO     | app.api.v1.workitems:create_work_item:268 - Work item created: Эпик - 1 by admin@example.com
+2026-02-20 18:45:00 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 18:45:00 | INFO     | app.api.v1.workitems:create_work_item:268 - Work item created: Фича - 1 by admin@example.com
+2026-02-20 18:45:44 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 18:45:44 | INFO     | app.api.v1.workitems:create_work_item:268 - Work item created: UserStory - 1 by admin@example.com
+2026-02-20 18:46:17 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 18:46:17 | INFO     | app.api.v1.workitems:create_work_item:268 - Work item created: Task - 1 by admin@example.com
+2026-02-20 18:46:33 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 18:46:33 | INFO     | app.api.v1.workitems:create_work_item:268 - Work item created: Task - 2 by admin@example.com
+2026-02-20 18:47:02 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 18:47:02 | INFO     | app.api.v1.workitems:create_work_item:268 - Work item created: Task - 2 by admin@example.com
+2026-02-20 18:47:40 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 18:48:02 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 18:48:32 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 18:49:11 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 18:50:32 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 18:50:51 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 18:50:51 | INFO     | app.api.v1.workitems:create_work_session:433 - Work session created for task be0c0c95-d26b-4dc4-9c2b-d8e31a99d16a by admin@example.com
+2026-02-20 18:51:07 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 18:51:36 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 18:53:24 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 18:53:24 | INFO     | app.api.v1.workitems:create_work_session:433 - Work session created for task 09d1b170-8890-4c11-923d-f408236aaf3f by admin@example.com
+2026-02-20 18:53:36 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 18:55:18 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 18:55:18 | INFO     | app.api.v1.workitems:update_work_session:477 - Work session d7ebc16c-2340-4d03-8495-0e9b26ad2305 updated by admin@example.com
+2026-02-20 18:55:42 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 18:55:42 | INFO     | app.api.v1.workitems:update_work_session:477 - Work session d7ebc16c-2340-4d03-8495-0e9b26ad2305 updated by admin@example.com
+2026-02-20 18:57:12 | INFO     | main:lifespan:28 - Shutting down application...
+2026-02-20 19:00:35 | INFO     | main:lifespan:19 - Starting application...
+2026-02-20 19:00:35 | INFO     | main:lifespan:24 - Database tables created/verified
+2026-02-20 19:01:31 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 19:02:21 | INFO     | main:lifespan:28 - Shutting down application...
+2026-02-20 19:02:23 | INFO     | main:lifespan:19 - Starting application...
+2026-02-20 19:02:23 | INFO     | main:lifespan:24 - Database tables created/verified
+2026-02-20 19:03:26 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 19:03:27 | INFO     | app.api.v1.workitems:update_work_session:491 - Work session updated d7ebc16c-2340-4d03-8495-0e9b26ad2305 by admin@example.com
+2026-02-20 19:08:23 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 19:10:21 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 19:13:16 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 19:13:39 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-02-20 19:18:01 | INFO     | main:lifespan:28 - Shutting down application...

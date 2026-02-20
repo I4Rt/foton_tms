@@ -2,14 +2,14 @@ from typing import List
 from uuid import UUID
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select
+from sqlalchemy import select, func
 from sqlalchemy.orm import selectinload
 from app.core.database import get_db
 from app.core.security import get_current_user, require_role, hash_password
 from app.core.logging import logger
-from app.models.models import User
+from app.models.models import User, Project, ProjectMember
 from app.models.enums import UserRole
-from app.schemas.schemas import UserCreate, UserUpdate, UserResponse, UserMeResponse
+from app.schemas.schemas import UserCreate, UserUpdate, UserResponse, UserMeResponse, ProjectResponse
 
 router = APIRouter(prefix="/users", tags=["Users"])
 
@@ -118,3 +118,41 @@ async def deactivate_user(
     await db.flush()
 
     logger.info(f"User deactivated: {user.email} by {current_user.email}")
+
+@router.get("/{user_id}/projects", response_model=List[ProjectResponse])
+async def get_user_projects(
+    user_id: UUID,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    """Get all projects for a specific user."""
+    # Только админ или сам пользователь
+    if current_user.role != UserRole.ADMINISTRATOR and current_user.id != user_id:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Access denied")
+
+    # Проверяем существование пользователя
+    user_result = await db.execute(select(User).where(User.id == user_id))
+    if not user_result.scalar_one_or_none():
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
+
+    # Получаем проекты через ProjectMember
+    result = await db.execute(
+        select(Project)
+        .join(ProjectMember, ProjectMember.project_id == Project.id)
+        .where(ProjectMember.user_id == user_id, Project.is_active == True)
+        .order_by(Project.created_date.desc())
+    )
+    projects = result.scalars().all()
+
+    response = []
+    for project in projects:
+        count_result = await db.execute(
+            select(func.count()).select_from(ProjectMember)
+            .where(ProjectMember.project_id == project.id)
+        )
+        member_count = count_result.scalar()
+        proj_dict = ProjectResponse.model_validate(project).model_dump()
+        proj_dict["member_count"] = member_count
+        response.append(ProjectResponse(**proj_dict))
+
+    return response

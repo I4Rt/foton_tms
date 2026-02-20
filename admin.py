@@ -27,7 +27,7 @@ INSERT INTO users (id, email, password_hash, display_name, role, is_active, capa
 VALUES (
     gen_random_uuid(),
     'admin@example.com',
-    '$2b$12$MKTEyH3kZCJF7/Bwb5BZh.HF5GtSYHVKaigZkytSP40PE5enNanUe',
+    '$2b$12$Y7wGSCp0fIoeZl9yHHQ9iucpB5ElkB417lJ6CPO3MmjCxYrHeenaO',
     'Admin',
     'Administrator',
     TRUE,

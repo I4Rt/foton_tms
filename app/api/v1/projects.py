@@ -2,17 +2,18 @@ from typing import List
 from uuid import UUID
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, func
+from sqlalchemy import select, func, update
 from sqlalchemy.orm import selectinload
 from app.core.database import get_db
 from app.core.security import get_current_user, require_role
 from app.core.logging import logger
-from app.models.models import Project, ProjectMember, User
+from app.models.models import Project, ProjectMember, User, WorkItem 
 from app.models.enums import UserRole
 from app.schemas.schemas import (
     ProjectCreate, ProjectUpdate, ProjectResponse,
     ProjectMemberAdd, ProjectMemberResponse
 )
+
 
 router = APIRouter(prefix="/projects", tags=["Projects"])
 
@@ -240,6 +241,16 @@ async def remove_project_member(
     member = result.scalar_one_or_none()
     if not member:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Member not found")
+
+    # Снять assigned_to у всех work items этого пользователя в проекте
+    await db.execute(
+        update(WorkItem)
+        .where(
+            WorkItem.project_id == project_id,
+            WorkItem.assigned_to == user_id
+        )
+        .values(assigned_to=None)
+    )
 
     await db.delete(member)
     await db.flush()
