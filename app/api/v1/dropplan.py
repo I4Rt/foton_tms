@@ -47,7 +47,9 @@ async def _get_members(project_id: UUID, db: AsyncSession) -> list[tuple[Project
 
 
 async def _get_iteration_tasks(
-    iteration_id: UUID, db: AsyncSession, user_id: UUID = None
+    iteration_id: UUID, 
+    db: AsyncSession, 
+    user_id: UUID = None
 ) -> list[WorkItem]:
     query = select(WorkItem).where(
         WorkItem.iteration_id == iteration_id,
@@ -58,6 +60,21 @@ async def _get_iteration_tasks(
     else:
         query = query.where(WorkItem.assigned_to.is_(None))
     result = await db.execute(query.order_by(WorkItem.start_date, WorkItem.title))
+    return result.scalars().all()
+
+
+async def _get_all_iteration_tasks(
+    iteration_id: UUID,
+    db: AsyncSession
+) -> list[WorkItem]:
+    result = await db.execute(
+        select(WorkItem)
+        .where(
+            WorkItem.iteration_id == iteration_id,
+            WorkItem.type == WorkItemType.TASK
+        )
+        .order_by(WorkItem.start_date, WorkItem.title)
+    )
     return result.scalars().all()
 
 
@@ -144,12 +161,11 @@ async def get_sprint_dropplan(
     project_id: UUID,
     iteration_id: UUID,
     db: AsyncSession = Depends(get_db),
-    current_user: User = Depends(get_current_user)
 ):
     """Get full sprint drop plan overview: working days, members, totals."""
     iteration = await _get_iteration_or_404(iteration_id, project_id, db)
     members = await _get_members(project_id, db)
-    tasks = await _get_iteration_tasks(iteration_id, db)
+    tasks = await _get_all_iteration_tasks(iteration_id, db)  # ← заменили вызов
     working_days = _parse_working_days(iteration)
 
     total_estimation = sum(t.estimation_hours or Decimal(0) for t in tasks)
