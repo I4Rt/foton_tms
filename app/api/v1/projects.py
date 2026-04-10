@@ -86,7 +86,8 @@ async def create_project(
     project = Project(
         name=project_data.name,
         description=project_data.description,
-        created_by=current_user.id
+        color=project_data.color,
+        created_by=current_user.id,
     )
     db.add(project)
     await db.flush()

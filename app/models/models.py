@@ -54,7 +54,7 @@ class Project(Base):
     modified_date: Mapped[datetime] = mapped_column(TIMESTAMP(timezone=True), default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
     is_active: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
 
-    color: Mapped[str] = mapped_column(String(7), default="#302266", server_default="#302266", nullable=True)
+    color: Mapped[str] = mapped_column(String(7), default="#302266", server_default="#302266", nullable=False)
 
     # Relationships
     creator: Mapped["User"] = relationship(back_populates="created_projects", foreign_keys=[created_by])

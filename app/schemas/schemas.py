@@ -65,6 +65,7 @@ class UserMeResponse(UserResponse):
 class ProjectBase(BaseModel):
     name: str = Field(..., min_length=3, max_length=200)
     description: Optional[str] = None
+    color: Optional[str] = None
 
 
 class ProjectCreate(ProjectBase):
