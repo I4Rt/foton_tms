@@ -76,6 +76,7 @@ class ProjectUpdate(BaseModel):
     name: Optional[str] = Field(None, min_length=3, max_length=200)
     description: Optional[str] = None
     is_active: Optional[bool] = None
+    color: Optional[str] = None
 
 
 class ProjectResponse(ProjectBase):
