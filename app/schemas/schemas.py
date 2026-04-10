@@ -2,12 +2,27 @@ from datetime import datetime, date
 from decimal import Decimal
 from typing import Optional, List
 from uuid import UUID
-from pydantic import BaseModel, EmailStr, Field, field_validator
+from pydantic import BaseModel, EmailStr, HttpUrl,  Field, field_validator
 from app.models.enums import (
     UserRole, WorkItemType, WorkItemState, Priority,
-    IterationState, NonWorkingDayType
+    IterationState, NonWorkingDayType, ImageSize
 )
 
+# ===== User Schemas =====
+
+class UploadedImageResponse(BaseModel):
+    url: str
+    key: str
+    width: int
+    height: int
+    size: ImageSize
+
+class DeleteImageRequest(BaseModel):
+    url: HttpUrl
+
+class DeleteImageResponse(BaseModel):
+    deleted: bool
+    key: str
 
 # ===== User Schemas =====
 

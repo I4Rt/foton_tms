@@ -1,0 +1,289 @@
+2026-04-10 17:35:23 | INFO     | main:lifespan:29 - Shutting down application...
+2026-04-10 17:35:26 | INFO     | main:lifespan:20 - Starting application...
+2026-04-10 17:35:26 | INFO     | main:lifespan:25 - Database tables created/verified
+2026-04-10 17:39:40 | INFO     | main:lifespan:29 - Shutting down application...
+2026-04-10 17:40:54 | INFO     | main:lifespan:29 - Starting application...
+2026-04-10 17:40:54 | INFO     | main:lifespan:32 - Running database migrations...
+2026-04-10 17:40:54 | ERROR    | main:lifespan:36 - Failed to apply database migrations
+Traceback (most recent call last):
+
+  File "<string>", line 1, in <module>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/multiprocessing/spawn.py", line 120, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+               │     │   └ 3
+               │     └ 8
+               └ <function _main at 0x72582e5e1d00>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/multiprocessing/spawn.py", line 133, in _main
+    return self._bootstrap(parent_sentinel)
+           │    │          └ 3
+           │    └ <function BaseProcess._bootstrap at 0x72582e6c72e0>
+           └ <SpawnProcess name='SpawnProcess-1' parent=79120 started>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+    │    └ <function BaseProcess.run at 0x72582e6c6840>
+    └ <SpawnProcess name='SpawnProcess-1' parent=79120 started>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    │    │        │    │        │    └ {'config': <uvicorn.config.Config object at 0x725829a8b490>, 'target': <bound method Server.run of <uvicorn.server.Server obj...
+    │    │        │    │        └ <SpawnProcess name='SpawnProcess-1' parent=79120 started>
+    │    │        │    └ ()
+    │    │        └ <SpawnProcess name='SpawnProcess-1' parent=79120 started>
+    │    └ <function subprocess_started at 0x725829762a20>
+    └ <SpawnProcess name='SpawnProcess-1' parent=79120 started>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/uvicorn/_subprocess.py", line 78, in subprocess_started
+    target(sockets=sockets)
+    │              └ [<socket.socket fd=4, family=2, type=1, proto=0, laddr=('0.0.0.0', 8000)>]
+    └ <bound method Server.run of <uvicorn.server.Server object at 0x72582978eed0>>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/uvicorn/server.py", line 62, in run
+    return asyncio.run(self.serve(sockets=sockets))
+           │       │   │    │             └ [<socket.socket fd=4, family=2, type=1, proto=0, laddr=('0.0.0.0', 8000)>]
+           │       │   │    └ <function Server.serve at 0x725829762340>
+           │       │   └ <uvicorn.server.Server object at 0x72582978eed0>
+           │       └ <function run at 0x72582dd66c00>
+           └ <module 'asyncio' from '/home/i4rt/.conda/envs/tms/lib/python3.11/asyncio/__init__.py'>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/asyncio/runners.py", line 190, in run
+    return runner.run(main)
+           │      │   └ <coroutine object Server.serve at 0x725829aefcd0>
+           │      └ <function Runner.run at 0x72582dd931a0>
+           └ <asyncio.runners.Runner object at 0x7258297e5c90>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           │    │     │                  └ <Task pending name='Task-1' coro=<Server.serve() running at /home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/uvicorn/s...
+           │    │     └ <cyfunction Loop.run_until_complete at 0x7258297b9180>
+           │    └ <uvloop.Loop running=True closed=False debug=False>
+           └ <asyncio.runners.Runner object at 0x7258297e5c90>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/uvicorn/lifespan/on.py", line 86, in main
+    await app(scope, self.receive, self.send)
+          │   │      │    │        │    └ <function LifespanOn.send at 0x7258294c8f40>
+          │   │      │    │        └ <uvicorn.lifespan.on.LifespanOn object at 0x72582a54f7d0>
+          │   │      │    └ <function LifespanOn.receive at 0x7258294c8fe0>
+          │   │      └ <uvicorn.lifespan.on.LifespanOn object at 0x72582a54f7d0>
+          │   └ {'type': 'lifespan', 'asgi': {'version': '3.0', 'spec_version': '2.0'}, 'state': {}, 'app': <fastapi.applications.FastAPI obj...
+          └ <uvicorn.middleware.proxy_headers.ProxyHeadersMiddleware object at 0x7258297e6250>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/uvicorn/middleware/proxy_headers.py", line 84, in __call__
+    return await self.app(scope, receive, send)
+                 │    │   │      │        └ <bound method LifespanOn.send of <uvicorn.lifespan.on.LifespanOn object at 0x72582a54f7d0>>
+                 │    │   │      └ <bound method LifespanOn.receive of <uvicorn.lifespan.on.LifespanOn object at 0x72582a54f7d0>>
+                 │    │   └ {'type': 'lifespan', 'asgi': {'version': '3.0', 'spec_version': '2.0'}, 'state': {}, 'app': <fastapi.applications.FastAPI obj...
+                 │    └ <fastapi.applications.FastAPI object at 0x7258297f1b50>
+                 └ <uvicorn.middleware.proxy_headers.ProxyHeadersMiddleware object at 0x7258297e6250>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+                           │      │        └ <bound method LifespanOn.send of <uvicorn.lifespan.on.LifespanOn object at 0x72582a54f7d0>>
+                           │      └ <bound method LifespanOn.receive of <uvicorn.lifespan.on.LifespanOn object at 0x72582a54f7d0>>
+                           └ {'type': 'lifespan', 'asgi': {'version': '3.0', 'spec_version': '2.0'}, 'state': {}, 'app': <fastapi.applications.FastAPI obj...
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/starlette/applications.py", line 123, in __call__
+    await self.middleware_stack(scope, receive, send)
+          │    │                │      │        └ <bound method LifespanOn.send of <uvicorn.lifespan.on.LifespanOn object at 0x72582a54f7d0>>
+          │    │                │      └ <bound method LifespanOn.receive of <uvicorn.lifespan.on.LifespanOn object at 0x72582a54f7d0>>
+          │    │                └ {'type': 'lifespan', 'asgi': {'version': '3.0', 'spec_version': '2.0'}, 'state': {}, 'app': <fastapi.applications.FastAPI obj...
+          │    └ <starlette.middleware.errors.ServerErrorMiddleware object at 0x72582a06cdd0>
+          └ <fastapi.applications.FastAPI object at 0x7258297f1b50>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/starlette/middleware/errors.py", line 151, in __call__
+    await self.app(scope, receive, send)
+          │    │   │      │        └ <bound method LifespanOn.send of <uvicorn.lifespan.on.LifespanOn object at 0x72582a54f7d0>>
+          │    │   │      └ <bound method LifespanOn.receive of <uvicorn.lifespan.on.LifespanOn object at 0x72582a54f7d0>>
+          │    │   └ {'type': 'lifespan', 'asgi': {'version': '3.0', 'spec_version': '2.0'}, 'state': {}, 'app': <fastapi.applications.FastAPI obj...
+          │    └ <starlette.middleware.cors.CORSMiddleware object at 0x72582a3a44d0>
+          └ <starlette.middleware.errors.ServerErrorMiddleware object at 0x72582a06cdd0>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/starlette/middleware/cors.py", line 75, in __call__
+    await self.app(scope, receive, send)
+          │    │   │      │        └ <bound method LifespanOn.send of <uvicorn.lifespan.on.LifespanOn object at 0x72582a54f7d0>>
+          │    │   │      └ <bound method LifespanOn.receive of <uvicorn.lifespan.on.LifespanOn object at 0x72582a54f7d0>>
+          │    │   └ {'type': 'lifespan', 'asgi': {'version': '3.0', 'spec_version': '2.0'}, 'state': {}, 'app': <fastapi.applications.FastAPI obj...
+          │    └ <starlette.middleware.exceptions.ExceptionMiddleware object at 0x72582a1b3d50>
+          └ <starlette.middleware.cors.CORSMiddleware object at 0x72582a3a44d0>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/starlette/middleware/exceptions.py", line 48, in __call__
+    await self.app(scope, receive, send)
+          │    │   │      │        └ <bound method LifespanOn.send of <uvicorn.lifespan.on.LifespanOn object at 0x72582a54f7d0>>
+          │    │   │      └ <bound method LifespanOn.receive of <uvicorn.lifespan.on.LifespanOn object at 0x72582a54f7d0>>
+          │    │   └ {'type': 'lifespan', 'asgi': {'version': '3.0', 'spec_version': '2.0'}, 'state': {}, 'app': <fastapi.applications.FastAPI obj...
+          │    └ <fastapi.routing.APIRouter object at 0x7258294d0590>
+          └ <starlette.middleware.exceptions.ExceptionMiddleware object at 0x72582a1b3d50>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/starlette/routing.py", line 762, in __call__
+    await self.middleware_stack(scope, receive, send)
+          │    │                │      │        └ <bound method LifespanOn.send of <uvicorn.lifespan.on.LifespanOn object at 0x72582a54f7d0>>
+          │    │                │      └ <bound method LifespanOn.receive of <uvicorn.lifespan.on.LifespanOn object at 0x72582a54f7d0>>
+          │    │                └ {'type': 'lifespan', 'asgi': {'version': '3.0', 'spec_version': '2.0'}, 'state': {}, 'app': <fastapi.applications.FastAPI obj...
+          │    └ <bound method Router.app of <fastapi.routing.APIRouter object at 0x7258294d0590>>
+          └ <fastapi.routing.APIRouter object at 0x7258294d0590>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/starlette/routing.py", line 771, in app
+    await self.lifespan(scope, receive, send)
+          │    │        │      │        └ <bound method LifespanOn.send of <uvicorn.lifespan.on.LifespanOn object at 0x72582a54f7d0>>
+          │    │        │      └ <bound method LifespanOn.receive of <uvicorn.lifespan.on.LifespanOn object at 0x72582a54f7d0>>
+          │    │        └ {'type': 'lifespan', 'asgi': {'version': '3.0', 'spec_version': '2.0'}, 'state': {}, 'app': <fastapi.applications.FastAPI obj...
+          │    └ <function Router.lifespan at 0x72582cc95260>
+          └ <fastapi.routing.APIRouter object at 0x7258294d0590>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/starlette/routing.py", line 738, in lifespan
+    async with self.lifespan_context(app) as maybe_state:
+               │    │                └ <fastapi.applications.FastAPI object at 0x7258297f1b50>
+               │    └ <function lifespan at 0x7258294c9120>
+               └ <fastapi.routing.APIRouter object at 0x7258294d0590>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/contextlib.py", line 204, in __aenter__
+    return await anext(self.gen)
+                       │    └ <async_generator object lifespan at 0x7258297ff920>
+                       └ <contextlib._AsyncGeneratorContextManager object at 0x72582a20aed0>
+
+> File "/home/i4rt/foton/tms/main.py", line 33, in lifespan
+    await asyncio.to_thread(run_migrations)
+                            └ <function run_migrations at 0x7258297fa7a0>
+
+NameError: name 'asyncio' is not defined
+2026-04-10 17:41:19 | INFO     | main:lifespan:32 - Starting application...
+2026-04-10 17:41:19 | INFO     | main:lifespan:35 - Running database migrations...
+2026-04-10 17:41:19 | ERROR    | main:lifespan:39 - Failed to apply database migrations
+Traceback (most recent call last):
+
+  File "<string>", line 1, in <module>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/multiprocessing/spawn.py", line 120, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+               │     │   └ 3
+               │     └ 8
+               └ <function _main at 0x7dba3fbe1d00>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/multiprocessing/spawn.py", line 133, in _main
+    return self._bootstrap(parent_sentinel)
+           │    │          └ 3
+           │    └ <function BaseProcess._bootstrap at 0x7dba3fcc72e0>
+           └ <SpawnProcess name='SpawnProcess-1' parent=79227 started>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+    │    └ <function BaseProcess.run at 0x7dba3fcc6840>
+    └ <SpawnProcess name='SpawnProcess-1' parent=79227 started>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    │    │        │    │        │    └ {'config': <uvicorn.config.Config object at 0x7dba3aff6810>, 'target': <bound method Server.run of <uvicorn.server.Server obj...
+    │    │        │    │        └ <SpawnProcess name='SpawnProcess-1' parent=79227 started>
+    │    │        │    └ ()
+    │    │        └ <SpawnProcess name='SpawnProcess-1' parent=79227 started>
+    │    └ <function subprocess_started at 0x7dba3aef2a20>
+    └ <SpawnProcess name='SpawnProcess-1' parent=79227 started>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/uvicorn/_subprocess.py", line 78, in subprocess_started
+    target(sockets=sockets)
+    │              └ [<socket.socket fd=4, family=2, type=1, proto=0, laddr=('0.0.0.0', 8000)>]
+    └ <bound method Server.run of <uvicorn.server.Server object at 0x7dba3ad22750>>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/uvicorn/server.py", line 62, in run
+    return asyncio.run(self.serve(sockets=sockets))
+           │       │   │    │             └ [<socket.socket fd=4, family=2, type=1, proto=0, laddr=('0.0.0.0', 8000)>]
+           │       │   │    └ <function Server.serve at 0x7dba3aef2340>
+           │       │   └ <uvicorn.server.Server object at 0x7dba3ad22750>
+           │       └ <function run at 0x7dba3f366c00>
+           └ <module 'asyncio' from '/home/i4rt/.conda/envs/tms/lib/python3.11/asyncio/__init__.py'>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/asyncio/runners.py", line 190, in run
+    return runner.run(main)
+           │      │   └ <coroutine object Server.serve at 0x7dba3ae5bcd0>
+           │      └ <function Runner.run at 0x7dba3f3931a0>
+           └ <asyncio.runners.Runner object at 0x7dba3bb68690>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           │    │     │                  └ <Task pending name='Task-1' coro=<Server.serve() running at /home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/uvicorn/s...
+           │    │     └ <cyfunction Loop.run_until_complete at 0x7dba3ad49180>
+           │    └ <uvloop.Loop running=True closed=False debug=False>
+           └ <asyncio.runners.Runner object at 0x7dba3bb68690>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/uvicorn/lifespan/on.py", line 86, in main
+    await app(scope, self.receive, self.send)
+          │   │      │    │        │    └ <function LifespanOn.send at 0x7dba3aa84f40>
+          │   │      │    │        └ <uvicorn.lifespan.on.LifespanOn object at 0x7dba3b907ad0>
+          │   │      │    └ <function LifespanOn.receive at 0x7dba3aa84fe0>
+          │   │      └ <uvicorn.lifespan.on.LifespanOn object at 0x7dba3b907ad0>
+          │   └ {'type': 'lifespan', 'asgi': {'version': '3.0', 'spec_version': '2.0'}, 'state': {}, 'app': <fastapi.applications.FastAPI obj...
+          └ <uvicorn.middleware.proxy_headers.ProxyHeadersMiddleware object at 0x7dba3aff6110>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/uvicorn/middleware/proxy_headers.py", line 84, in __call__
+    return await self.app(scope, receive, send)
+                 │    │   │      │        └ <bound method LifespanOn.send of <uvicorn.lifespan.on.LifespanOn object at 0x7dba3b907ad0>>
+                 │    │   │      └ <bound method LifespanOn.receive of <uvicorn.lifespan.on.LifespanOn object at 0x7dba3b907ad0>>
+                 │    │   └ {'type': 'lifespan', 'asgi': {'version': '3.0', 'spec_version': '2.0'}, 'state': {}, 'app': <fastapi.applications.FastAPI obj...
+                 │    └ <fastapi.applications.FastAPI object at 0x7dba3b7ca690>
+                 └ <uvicorn.middleware.proxy_headers.ProxyHeadersMiddleware object at 0x7dba3aff6110>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+                           │      │        └ <bound method LifespanOn.send of <uvicorn.lifespan.on.LifespanOn object at 0x7dba3b907ad0>>
+                           │      └ <bound method LifespanOn.receive of <uvicorn.lifespan.on.LifespanOn object at 0x7dba3b907ad0>>
+                           └ {'type': 'lifespan', 'asgi': {'version': '3.0', 'spec_version': '2.0'}, 'state': {}, 'app': <fastapi.applications.FastAPI obj...
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/starlette/applications.py", line 123, in __call__
+    await self.middleware_stack(scope, receive, send)
+          │    │                │      │        └ <bound method LifespanOn.send of <uvicorn.lifespan.on.LifespanOn object at 0x7dba3b907ad0>>
+          │    │                │      └ <bound method LifespanOn.receive of <uvicorn.lifespan.on.LifespanOn object at 0x7dba3b907ad0>>
+          │    │                └ {'type': 'lifespan', 'asgi': {'version': '3.0', 'spec_version': '2.0'}, 'state': {}, 'app': <fastapi.applications.FastAPI obj...
+          │    └ <starlette.middleware.errors.ServerErrorMiddleware object at 0x7dba3ab4ca10>
+          └ <fastapi.applications.FastAPI object at 0x7dba3b7ca690>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/starlette/middleware/errors.py", line 151, in __call__
+    await self.app(scope, receive, send)
+          │    │   │      │        └ <bound method LifespanOn.send of <uvicorn.lifespan.on.LifespanOn object at 0x7dba3b907ad0>>
+          │    │   │      └ <bound method LifespanOn.receive of <uvicorn.lifespan.on.LifespanOn object at 0x7dba3b907ad0>>
+          │    │   └ {'type': 'lifespan', 'asgi': {'version': '3.0', 'spec_version': '2.0'}, 'state': {}, 'app': <fastapi.applications.FastAPI obj...
+          │    └ <starlette.middleware.cors.CORSMiddleware object at 0x7dba3b9a4bd0>
+          └ <starlette.middleware.errors.ServerErrorMiddleware object at 0x7dba3ab4ca10>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/starlette/middleware/cors.py", line 75, in __call__
+    await self.app(scope, receive, send)
+          │    │   │      │        └ <bound method LifespanOn.send of <uvicorn.lifespan.on.LifespanOn object at 0x7dba3b907ad0>>
+          │    │   │      └ <bound method LifespanOn.receive of <uvicorn.lifespan.on.LifespanOn object at 0x7dba3b907ad0>>
+          │    │   └ {'type': 'lifespan', 'asgi': {'version': '3.0', 'spec_version': '2.0'}, 'state': {}, 'app': <fastapi.applications.FastAPI obj...
+          │    └ <starlette.middleware.exceptions.ExceptionMiddleware object at 0x7dba3af0e490>
+          └ <starlette.middleware.cors.CORSMiddleware object at 0x7dba3b9a4bd0>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/starlette/middleware/exceptions.py", line 48, in __call__
+    await self.app(scope, receive, send)
+          │    │   │      │        └ <bound method LifespanOn.send of <uvicorn.lifespan.on.LifespanOn object at 0x7dba3b907ad0>>
+          │    │   │      └ <bound method LifespanOn.receive of <uvicorn.lifespan.on.LifespanOn object at 0x7dba3b907ad0>>
+          │    │   └ {'type': 'lifespan', 'asgi': {'version': '3.0', 'spec_version': '2.0'}, 'state': {}, 'app': <fastapi.applications.FastAPI obj...
+          │    └ <fastapi.routing.APIRouter object at 0x7dba3aa6f750>
+          └ <starlette.middleware.exceptions.ExceptionMiddleware object at 0x7dba3af0e490>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/starlette/routing.py", line 762, in __call__
+    await self.middleware_stack(scope, receive, send)
+          │    │                │      │        └ <bound method LifespanOn.send of <uvicorn.lifespan.on.LifespanOn object at 0x7dba3b907ad0>>
+          │    │                │      └ <bound method LifespanOn.receive of <uvicorn.lifespan.on.LifespanOn object at 0x7dba3b907ad0>>
+          │    │                └ {'type': 'lifespan', 'asgi': {'version': '3.0', 'spec_version': '2.0'}, 'state': {}, 'app': <fastapi.applications.FastAPI obj...
+          │    └ <bound method Router.app of <fastapi.routing.APIRouter object at 0x7dba3aa6f750>>
+          └ <fastapi.routing.APIRouter object at 0x7dba3aa6f750>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/starlette/routing.py", line 771, in app
+    await self.lifespan(scope, receive, send)
+          │    │        │      │        └ <bound method LifespanOn.send of <uvicorn.lifespan.on.LifespanOn object at 0x7dba3b907ad0>>
+          │    │        │      └ <bound method LifespanOn.receive of <uvicorn.lifespan.on.LifespanOn object at 0x7dba3b907ad0>>
+          │    │        └ {'type': 'lifespan', 'asgi': {'version': '3.0', 'spec_version': '2.0'}, 'state': {}, 'app': <fastapi.applications.FastAPI obj...
+          │    └ <function Router.lifespan at 0x7dba3e2c9260>
+          └ <fastapi.routing.APIRouter object at 0x7dba3aa6f750>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/starlette/routing.py", line 738, in lifespan
+    async with self.lifespan_context(app) as maybe_state:
+               │    │                └ <fastapi.applications.FastAPI object at 0x7dba3b7ca690>
+               │    └ <function lifespan at 0x7dba3aa85120>
+               └ <fastapi.routing.APIRouter object at 0x7dba3aa6f750>
+
+> File "/home/i4rt/foton/tms/main.py", line 36, in lifespan
+    await asyncio.to_thread(run_migrations)
+          │       │         └ <function run_migrations at 0x7dba3ad867a0>
+          │       └ <function to_thread at 0x7dba3f3b80e0>
+          └ <module 'asyncio' from '/home/i4rt/.conda/envs/tms/lib/python3.11/asyncio/__init__.py'>
+
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/asyncio/threads.py", line 25, in to_thread
+    return await loop.run_in_executor(None, func_call)
+                 │    │                     └ functools.partial(<built-in method run of _contextvars.Context object at 0x7dba3ba13e00>, <function run_migrations at 0x7dba3...
+                 │    └ <cyfunction Loop.run_in_executor at 0x7dba3ad4a440>
+                 └ <uvloop.Loop running=True closed=False debug=False>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             │        │            └ None
+             │        └ None
+             └ None
+
+  File "/home/i4rt/foton/tms/main.py", line 27, in run_migrations
+    command.upgrade(alembic_cfg, "head")
+    │       │       └ <alembic.config.Config object at 0x7dba3b8f3e90>
+    │       └ <function upgrade at 0x7dba3d3aefc0>
+    └ <module 'alembic.command' from '/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/alembic/command.py'>
+
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/alembic/command.py", line 463, in upgrade
+    script = ScriptDirectory.from_config(config)
+             │               │           └ <alembic.config.Config object at 0x7dba3b8f3e90>
+             │               └ <classmethod(<function ScriptDirectory.from_config at 0x7dba3d586a20>)>
+             └ <class 'alembic.script.base.ScriptDirectory'>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/alembic/script/base.py", line 171, in from_config
+    raise util.CommandError(
+          │    └ <class 'alembic.util.exc.CommandError'>
+          └ <module 'alembic.util' from '/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/alembic/util/__init__.py'>
+
+alembic.util.exc.CommandError: No 'script_location' key found in configuration.
+2026-04-10 17:44:27 | INFO     | main:lifespan:20 - Starting application...
+2026-04-10 17:44:27 | INFO     | main:lifespan:25 - Database tables created/verified
+2026-04-10 17:45:50 | INFO     | main:lifespan:29 - Shutting down application...
+2026-04-10 17:45:52 | INFO     | main:lifespan:20 - Starting application...
+2026-04-10 17:45:52 | INFO     | main:lifespan:25 - Database tables created/verified
+2026-04-10 17:50:30 | INFO     | main:lifespan:29 - Shutting down application...

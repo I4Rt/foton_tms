@@ -6,8 +6,9 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.core.config import get_settings
 from app.core.database import engine, Base
+from app.core.s3client import s3_client
 from app.core.logging import logger
-from app.api.v1 import users, projects, workitems, iterations, dropplan, calendar, work_sessions
+from app.api.v1 import users, projects, workitems, iterations, dropplan, calendar, work_sessions, s3
 
 
 settings = get_settings()
@@ -72,6 +73,7 @@ app.include_router(iterations.router, prefix=settings.API_V1_PREFIX)
 app.include_router(dropplan.router, prefix=settings.API_V1_PREFIX)
 # app.include_router(calendar.router, prefix=settings.API_V1_PREFIX)
 app.include_router(work_sessions.router, prefix=settings.API_V1_PREFIX)
+app.include_router(s3.router, prefix=settings.API_V1_PREFIX)
 
 
 @app.get("/health")

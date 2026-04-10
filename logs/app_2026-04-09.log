@@ -1,0 +1,577 @@
+2026-04-09 13:14:09 | INFO     | main:lifespan:20 - Starting application...
+2026-04-09 13:14:09 | INFO     | main:lifespan:25 - Database tables created/verified
+2026-04-09 13:15:13 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-04-09 13:15:13 | ERROR    | app.api.v1.s3:upload_image:114 - Image upload failed: %s
+Traceback (most recent call last):
+
+  File "<string>", line 1, in <module>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/multiprocessing/spawn.py", line 120, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+               │     │   └ 3
+               │     └ 8
+               └ <function _main at 0x73d335d4dd00>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/multiprocessing/spawn.py", line 133, in _main
+    return self._bootstrap(parent_sentinel)
+           │    │          └ 3
+           │    └ <function BaseProcess._bootstrap at 0x73d335e332e0>
+           └ <SpawnProcess name='SpawnProcess-1' parent=33170 started>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+    │    └ <function BaseProcess.run at 0x73d335e32840>
+    └ <SpawnProcess name='SpawnProcess-1' parent=33170 started>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    │    │        │    │        │    └ {'config': <uvicorn.config.Config object at 0x73d3314e2910>, 'target': <bound method Server.run of <uvicorn.server.Server obj...
+    │    │        │    │        └ <SpawnProcess name='SpawnProcess-1' parent=33170 started>
+    │    │        │    └ ()
+    │    │        └ <SpawnProcess name='SpawnProcess-1' parent=33170 started>
+    │    └ <function subprocess_started at 0x73d33117c4a0>
+    └ <SpawnProcess name='SpawnProcess-1' parent=33170 started>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/uvicorn/_subprocess.py", line 78, in subprocess_started
+    target(sockets=sockets)
+    │              └ [<socket.socket fd=4, family=2, type=1, proto=0, laddr=('0.0.0.0', 8000)>]
+    └ <bound method Server.run of <uvicorn.server.Server object at 0x73d33119cf10>>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/uvicorn/server.py", line 62, in run
+    return asyncio.run(self.serve(sockets=sockets))
+           │       │   │    │             └ [<socket.socket fd=4, family=2, type=1, proto=0, laddr=('0.0.0.0', 8000)>]
+           │       │   │    └ <function Server.serve at 0x73d331137a60>
+           │       │   └ <uvicorn.server.Server object at 0x73d33119cf10>
+           │       └ <function run at 0x73d335806c00>
+           └ <module 'asyncio' from '/home/i4rt/.conda/envs/tms/lib/python3.11/asyncio/__init__.py'>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/asyncio/runners.py", line 190, in run
+    return runner.run(main)
+           │      │   └ <coroutine object Server.serve at 0x73d331116680>
+           │      └ <function Runner.run at 0x73d3358331a0>
+           └ <asyncio.runners.Runner object at 0x73d3311ec0d0>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           │    │     │                  └ <Task pending name='Task-1' coro=<Server.serve() running at /home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/uvicorn/s...
+           │    │     └ <cyfunction Loop.run_until_complete at 0x73d331153400>
+           │    └ <uvloop.Loop running=True closed=False debug=False>
+           └ <asyncio.runners.Runner object at 0x73d3311ec0d0>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/uvicorn/protocols/http/httptools_impl.py", line 419, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+                   └ <uvicorn.middleware.proxy_headers.ProxyHeadersMiddleware object at 0x73d3311ec650>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/uvicorn/middleware/proxy_headers.py", line 84, in __call__
+    return await self.app(scope, receive, send)
+                 │    │   │      │        └ <bound method RequestResponseCycle.send of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x73d330ce46...
+                 │    │   │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x73d330c...
+                 │    │   └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+                 │    └ <fastapi.applications.FastAPI object at 0x73d331af6710>
+                 └ <uvicorn.middleware.proxy_headers.ProxyHeadersMiddleware object at 0x73d3311ec650>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+                           │      │        └ <bound method RequestResponseCycle.send of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x73d330ce46...
+                           │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x73d330c...
+                           └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/starlette/applications.py", line 123, in __call__
+    await self.middleware_stack(scope, receive, send)
+          │    │                │      │        └ <bound method RequestResponseCycle.send of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x73d330ce46...
+          │    │                │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x73d330c...
+          │    │                └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │    └ <starlette.middleware.errors.ServerErrorMiddleware object at 0x73d331ace6d0>
+          └ <fastapi.applications.FastAPI object at 0x73d331af6710>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+          │    │   │      │        └ <function ServerErrorMiddleware.__call__.<locals>._send at 0x73d330cb4a40>
+          │    │   │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x73d330c...
+          │    │   └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │    └ <starlette.middleware.cors.CORSMiddleware object at 0x73d330e82990>
+          └ <starlette.middleware.errors.ServerErrorMiddleware object at 0x73d331ace6d0>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/starlette/middleware/cors.py", line 91, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+          │    │               │      │        │                     └ Headers({'host': 'localhost:8000', 'connection': 'keep-alive', 'content-length': '58319', 'authorization': 'Basic YWRtaW5AZXh...
+          │    │               │      │        └ <function ServerErrorMiddleware.__call__.<locals>._send at 0x73d330cb4a40>
+          │    │               │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x73d330c...
+          │    │               └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │    └ <function CORSMiddleware.simple_response at 0x73d3343d3560>
+          └ <starlette.middleware.cors.CORSMiddleware object at 0x73d330e82990>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/starlette/middleware/cors.py", line 146, in simple_response
+    await self.app(scope, receive, send)
+          │    │   │      │        └ functools.partial(<bound method CORSMiddleware.send of <starlette.middleware.cors.CORSMiddleware object at 0x73d330e82990>>, ...
+          │    │   │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x73d330c...
+          │    │   └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │    └ <starlette.middleware.exceptions.ExceptionMiddleware object at 0x73d331d272d0>
+          └ <starlette.middleware.cors.CORSMiddleware object at 0x73d330e82990>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+          │                            │    │    │     │      │        └ functools.partial(<bound method CORSMiddleware.send of <starlette.middleware.cors.CORSMiddleware object at 0x73d330e82990>>, ...
+          │                            │    │    │     │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x73d330c...
+          │                            │    │    │     └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │                            │    │    └ <starlette.requests.Request object at 0x73d330d20990>
+          │                            │    └ <fastapi.routing.APIRouter object at 0x73d330e1a5d0>
+          │                            └ <starlette.middleware.exceptions.ExceptionMiddleware object at 0x73d331d272d0>
+          └ <function wrap_app_handling_exceptions at 0x73d334376340>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+          │   │      │        └ <function wrap_app_handling_exceptions.<locals>.wrapped_app.<locals>.sender at 0x73d330e43e20>
+          │   │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x73d330c...
+          │   └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          └ <fastapi.routing.APIRouter object at 0x73d330e1a5d0>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/starlette/routing.py", line 762, in __call__
+    await self.middleware_stack(scope, receive, send)
+          │    │                │      │        └ <function wrap_app_handling_exceptions.<locals>.wrapped_app.<locals>.sender at 0x73d330e43e20>
+          │    │                │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x73d330c...
+          │    │                └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │    └ <bound method Router.app of <fastapi.routing.APIRouter object at 0x73d330e1a5d0>>
+          └ <fastapi.routing.APIRouter object at 0x73d330e1a5d0>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/starlette/routing.py", line 782, in app
+    await route.handle(scope, receive, send)
+          │     │      │      │        └ <function wrap_app_handling_exceptions.<locals>.wrapped_app.<locals>.sender at 0x73d330e43e20>
+          │     │      │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x73d330c...
+          │     │      └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │     └ <function Route.handle at 0x73d334377ba0>
+          └ APIRoute(path='/api/v1/images/upload', name='upload_image', methods=['POST'])
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/starlette/routing.py", line 297, in handle
+    await self.app(scope, receive, send)
+          │    │   │      │        └ <function wrap_app_handling_exceptions.<locals>.wrapped_app.<locals>.sender at 0x73d330e43e20>
+          │    │   │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x73d330c...
+          │    │   └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │    └ <function request_response.<locals>.app at 0x73d330cb4cc0>
+          └ APIRoute(path='/api/v1/images/upload', name='upload_image', methods=['POST'])
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/starlette/routing.py", line 77, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+          │                            │    │        │      │        └ <function wrap_app_handling_exceptions.<locals>.wrapped_app.<locals>.sender at 0x73d330e43e20>
+          │                            │    │        │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x73d330c...
+          │                            │    │        └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │                            │    └ <starlette.requests.Request object at 0x73d330d20750>
+          │                            └ <function request_response.<locals>.app.<locals>.app at 0x73d330e1fb00>
+          └ <function wrap_app_handling_exceptions at 0x73d334376340>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+          │   │      │        └ <function wrap_app_handling_exceptions.<locals>.wrapped_app.<locals>.sender at 0x73d330d70ea0>
+          │   │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x73d330c...
+          │   └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          └ <function request_response.<locals>.app.<locals>.app at 0x73d330e1fb00>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/starlette/routing.py", line 72, in app
+    response = await func(request)
+                     │    └ <starlette.requests.Request object at 0x73d330d20750>
+                     └ <function get_request_handler.<locals>.app at 0x73d330cb5a80>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/fastapi/routing.py", line 294, in app
+    raw_response = await run_endpoint_function(
+                         └ <function run_endpoint_function at 0x73d334375b20>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/fastapi/routing.py", line 191, in run_endpoint_function
+    return await dependant.call(**values)
+                 │         │      └ {'current_user': <app.models.models.User object at 0x73d331ca0a50>, 's3_client': <app.core.s3client.S3Client object at 0x73d3...
+                 │         └ <function upload_image at 0x73d331ac68e0>
+                 └ <fastapi.dependencies.models.Dependant object at 0x73d330ce4e50>
+
+> File "/home/i4rt/foton/tms/app/api/v1/s3.py", line 88, in upload_image
+    s3_client.put_bytes(
+    │         └ <function S3Client.put_bytes at 0x73d332a69440>
+    └ <app.core.s3client.S3Client object at 0x73d333380510>
+
+  File "/home/i4rt/foton/tms/app/core/s3client.py", line 38, in put_bytes
+    self._client.put_object(**params)
+    │                         └ {'Bucket': 'tms-b1', 'Key': 'images/339a0cbf-63f2-44aa-8d0b-a597f51382c8/large/e44f0b80-d7e8-4035-82d7-55094c80e828.jpg', 'Bo...
+    └ <app.core.s3client.S3Client object at 0x73d333380510>
+
+AttributeError: 'S3Client' object has no attribute '_client'
+2026-04-09 13:16:36 | INFO     | main:lifespan:29 - Shutting down application...
+2026-04-09 13:16:37 | INFO     | main:lifespan:20 - Starting application...
+2026-04-09 13:16:37 | INFO     | main:lifespan:25 - Database tables created/verified
+2026-04-09 13:16:44 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-04-09 13:16:44 | ERROR    | app.api.v1.s3:upload_image:108 - S3 upload failed: %s
+Traceback (most recent call last):
+
+  File "<string>", line 1, in <module>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/multiprocessing/spawn.py", line 120, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+               │     │   └ 3
+               │     └ 8
+               └ <function _main at 0x776642de1d00>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/multiprocessing/spawn.py", line 133, in _main
+    return self._bootstrap(parent_sentinel)
+           │    │          └ 3
+           │    └ <function BaseProcess._bootstrap at 0x776642ec72e0>
+           └ <SpawnProcess name='SpawnProcess-2' parent=33170 started>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+    │    └ <function BaseProcess.run at 0x776642ec6840>
+    └ <SpawnProcess name='SpawnProcess-2' parent=33170 started>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    │    │        │    │        │    └ {'config': <uvicorn.config.Config object at 0x77663e3863d0>, 'target': <bound method Server.run of <uvicorn.server.Server obj...
+    │    │        │    │        └ <SpawnProcess name='SpawnProcess-2' parent=33170 started>
+    │    │        │    └ ()
+    │    │        └ <SpawnProcess name='SpawnProcess-2' parent=33170 started>
+    │    └ <function subprocess_started at 0x77663e2b8540>
+    └ <SpawnProcess name='SpawnProcess-2' parent=33170 started>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/uvicorn/_subprocess.py", line 78, in subprocess_started
+    target(sockets=sockets)
+    │              └ [<socket.socket fd=4, family=2, type=1, proto=0, laddr=('0.0.0.0', 8000)>]
+    └ <bound method Server.run of <uvicorn.server.Server object at 0x77663e2d8e10>>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/uvicorn/server.py", line 62, in run
+    return asyncio.run(self.serve(sockets=sockets))
+           │       │   │    │             └ [<socket.socket fd=4, family=2, type=1, proto=0, laddr=('0.0.0.0', 8000)>]
+           │       │   │    └ <function Server.serve at 0x77663e273b00>
+           │       │   └ <uvicorn.server.Server object at 0x77663e2d8e10>
+           │       └ <function run at 0x776642566c00>
+           └ <module 'asyncio' from '/home/i4rt/.conda/envs/tms/lib/python3.11/asyncio/__init__.py'>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/asyncio/runners.py", line 190, in run
+    return runner.run(main)
+           │      │   └ <coroutine object Server.serve at 0x77663e252680>
+           │      └ <function Runner.run at 0x77664258f1a0>
+           └ <asyncio.runners.Runner object at 0x77663deb82d0>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           │    │     │                  └ <Task pending name='Task-1' coro=<Server.serve() running at /home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/uvicorn/s...
+           │    │     └ <cyfunction Loop.run_until_complete at 0x77663e28b400>
+           │    └ <uvloop.Loop running=True closed=False debug=False>
+           └ <asyncio.runners.Runner object at 0x77663deb82d0>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/uvicorn/protocols/http/httptools_impl.py", line 419, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+                   └ <uvicorn.middleware.proxy_headers.ProxyHeadersMiddleware object at 0x77663deb8750>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/uvicorn/middleware/proxy_headers.py", line 84, in __call__
+    return await self.app(scope, receive, send)
+                 │    │   │      │        └ <bound method RequestResponseCycle.send of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x77663de573...
+                 │    │   │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x77663de...
+                 │    │   └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+                 │    └ <fastapi.applications.FastAPI object at 0x77663df52d90>
+                 └ <uvicorn.middleware.proxy_headers.ProxyHeadersMiddleware object at 0x77663deb8750>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+                           │      │        └ <bound method RequestResponseCycle.send of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x77663de573...
+                           │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x77663de...
+                           └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/starlette/applications.py", line 123, in __call__
+    await self.middleware_stack(scope, receive, send)
+          │    │                │      │        └ <bound method RequestResponseCycle.send of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x77663de573...
+          │    │                │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x77663de...
+          │    │                └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │    └ <starlette.middleware.errors.ServerErrorMiddleware object at 0x77663ed5d210>
+          └ <fastapi.applications.FastAPI object at 0x77663df52d90>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+          │    │   │      │        └ <function ServerErrorMiddleware.__call__.<locals>._send at 0x77663ddd3ba0>
+          │    │   │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x77663de...
+          │    │   └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │    └ <starlette.middleware.cors.CORSMiddleware object at 0x77663ed5c910>
+          └ <starlette.middleware.errors.ServerErrorMiddleware object at 0x77663ed5d210>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/starlette/middleware/cors.py", line 91, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+          │    │               │      │        │                     └ Headers({'host': 'localhost:8000', 'connection': 'keep-alive', 'content-length': '58319', 'authorization': 'Basic YWRtaW5AZXh...
+          │    │               │      │        └ <function ServerErrorMiddleware.__call__.<locals>._send at 0x77663ddd3ba0>
+          │    │               │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x77663de...
+          │    │               └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │    └ <function CORSMiddleware.simple_response at 0x7766414d7560>
+          └ <starlette.middleware.cors.CORSMiddleware object at 0x77663ed5c910>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/starlette/middleware/cors.py", line 146, in simple_response
+    await self.app(scope, receive, send)
+          │    │   │      │        └ functools.partial(<bound method CORSMiddleware.send of <starlette.middleware.cors.CORSMiddleware object at 0x77663ed5c910>>, ...
+          │    │   │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x77663de...
+          │    │   └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │    └ <starlette.middleware.exceptions.ExceptionMiddleware object at 0x77663ed6b190>
+          └ <starlette.middleware.cors.CORSMiddleware object at 0x77663ed5c910>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+          │                            │    │    │     │      │        └ functools.partial(<bound method CORSMiddleware.send of <starlette.middleware.cors.CORSMiddleware object at 0x77663ed5c910>>, ...
+          │                            │    │    │     │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x77663de...
+          │                            │    │    │     └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │                            │    │    └ <starlette.requests.Request object at 0x77663de57650>
+          │                            │    └ <fastapi.routing.APIRouter object at 0x77663df53150>
+          │                            └ <starlette.middleware.exceptions.ExceptionMiddleware object at 0x77663ed6b190>
+          └ <function wrap_app_handling_exceptions at 0x77664147a340>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+          │   │      │        └ <function wrap_app_handling_exceptions.<locals>.wrapped_app.<locals>.sender at 0x77663ddd3ce0>
+          │   │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x77663de...
+          │   └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          └ <fastapi.routing.APIRouter object at 0x77663df53150>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/starlette/routing.py", line 762, in __call__
+    await self.middleware_stack(scope, receive, send)
+          │    │                │      │        └ <function wrap_app_handling_exceptions.<locals>.wrapped_app.<locals>.sender at 0x77663ddd3ce0>
+          │    │                │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x77663de...
+          │    │                └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │    └ <bound method Router.app of <fastapi.routing.APIRouter object at 0x77663df53150>>
+          └ <fastapi.routing.APIRouter object at 0x77663df53150>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/starlette/routing.py", line 782, in app
+    await route.handle(scope, receive, send)
+          │     │      │      │        └ <function wrap_app_handling_exceptions.<locals>.wrapped_app.<locals>.sender at 0x77663ddd3ce0>
+          │     │      │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x77663de...
+          │     │      └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │     └ <function Route.handle at 0x77664147bba0>
+          └ APIRoute(path='/api/v1/images/upload', name='upload_image', methods=['POST'])
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/starlette/routing.py", line 297, in handle
+    await self.app(scope, receive, send)
+          │    │   │      │        └ <function wrap_app_handling_exceptions.<locals>.wrapped_app.<locals>.sender at 0x77663ddd3ce0>
+          │    │   │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x77663de...
+          │    │   └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │    └ <function request_response.<locals>.app at 0x77663ddd2660>
+          └ APIRoute(path='/api/v1/images/upload', name='upload_image', methods=['POST'])
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/starlette/routing.py", line 77, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+          │                            │    │        │      │        └ <function wrap_app_handling_exceptions.<locals>.wrapped_app.<locals>.sender at 0x77663ddd3ce0>
+          │                            │    │        │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x77663de...
+          │                            │    │        └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │                            │    └ <starlette.requests.Request object at 0x77663de3cd90>
+          │                            └ <function request_response.<locals>.app.<locals>.app at 0x77663ddd3d80>
+          └ <function wrap_app_handling_exceptions at 0x77664147a340>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+          │   │      │        └ <function wrap_app_handling_exceptions.<locals>.wrapped_app.<locals>.sender at 0x77663ddd3ec0>
+          │   │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x77663de...
+          │   └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          └ <function request_response.<locals>.app.<locals>.app at 0x77663ddd3d80>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/starlette/routing.py", line 72, in app
+    response = await func(request)
+                     │    └ <starlette.requests.Request object at 0x77663de3cd90>
+                     └ <function get_request_handler.<locals>.app at 0x77663ddd2700>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/fastapi/routing.py", line 294, in app
+    raw_response = await run_endpoint_function(
+                         └ <function run_endpoint_function at 0x776641479b20>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/fastapi/routing.py", line 191, in run_endpoint_function
+    return await dependant.call(**values)
+                 │         │      └ {'current_user': <app.models.models.User object at 0x77663bd16050>, 's3_client': <app.core.s3client.S3Client object at 0x7766...
+                 │         └ <function upload_image at 0x77663ebae980>
+                 └ <fastapi.dependencies.models.Dependant object at 0x77663de3cad0>
+
+> File "/home/i4rt/foton/tms/app/api/v1/s3.py", line 88, in upload_image
+    s3_client.put_bytes(
+    │         └ <function S3Client.put_bytes at 0x77663fb354e0>
+    └ <app.core.s3client.S3Client object at 0x776640447bd0>
+
+  File "/home/i4rt/foton/tms/app/core/s3client.py", line 38, in put_bytes
+    self.client.put_object(**params)
+    │    │      │            └ {'Bucket': 'tms-b1', 'Key': 'images/339a0cbf-63f2-44aa-8d0b-a597f51382c8/large/26cb2db6-7d18-41c3-9b3d-0c4a820075b4.jpg', 'Bo...
+    │    │      └ <function ClientCreator._create_api_method.<locals>._api_call at 0x77663efd05e0>
+    │    └ <botocore.client.S3 object at 0x7766401353d0>
+    └ <app.core.s3client.S3Client object at 0x776640447bd0>
+
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/botocore/client.py", line 602, in _api_call
+    return self._make_api_call(operation_name, kwargs)
+           │    │              │               └ {'Bucket': 'tms-b1', 'Key': 'images/339a0cbf-63f2-44aa-8d0b-a597f51382c8/large/26cb2db6-7d18-41c3-9b3d-0c4a820075b4.jpg', 'Bo...
+           │    │              └ 'PutObject'
+           │    └ <function BaseClient._make_api_call at 0x77663fca5760>
+           └ <botocore.client.S3 object at 0x7766401353d0>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/botocore/context.py", line 123, in wrapper
+    return func(*args, **kwargs)
+           │     │       └ {}
+           │     └ (<botocore.client.S3 object at 0x7766401353d0>, 'PutObject', {'Bucket': 'tms-b1', 'Key': 'images/339a0cbf-63f2-44aa-8d0b-a597...
+           └ <function BaseClient._make_api_call at 0x77663fca56c0>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/botocore/client.py", line 1078, in _make_api_call
+    raise error_class(parsed_response, operation_name)
+          │           │                └ 'PutObject'
+          │           └ {'Error': {'Code': 'SignatureDoesNotMatch', 'Message': 'The request signature we calculated does not match the signature you ...
+          └ <class 'botocore.exceptions.ClientError'>
+
+botocore.exceptions.ClientError: An error occurred (SignatureDoesNotMatch) when calling the PutObject operation: The request signature we calculated does not match the signature you provided. Check your key and signing method.
+2026-04-09 13:18:21 | INFO     | main:lifespan:29 - Shutting down application...
+2026-04-09 13:18:24 | INFO     | main:lifespan:20 - Starting application...
+2026-04-09 13:18:24 | INFO     | main:lifespan:25 - Database tables created/verified
+2026-04-09 13:18:27 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-04-09 13:18:28 | ERROR    | app.api.v1.s3:upload_image:108 - S3 upload failed: %s
+Traceback (most recent call last):
+
+  File "<string>", line 1, in <module>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/multiprocessing/spawn.py", line 120, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+               │     │   └ 3
+               │     └ 8
+               └ <function _main at 0x793b600a5d00>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/multiprocessing/spawn.py", line 133, in _main
+    return self._bootstrap(parent_sentinel)
+           │    │          └ 3
+           │    └ <function BaseProcess._bootstrap at 0x793b601872e0>
+           └ <SpawnProcess name='SpawnProcess-4' parent=33170 started>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+    │    └ <function BaseProcess.run at 0x793b60186840>
+    └ <SpawnProcess name='SpawnProcess-4' parent=33170 started>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    │    │        │    │        │    └ {'config': <uvicorn.config.Config object at 0x793b5b542b10>, 'target': <bound method Server.run of <uvicorn.server.Server obj...
+    │    │        │    │        └ <SpawnProcess name='SpawnProcess-4' parent=33170 started>
+    │    │        │    └ ()
+    │    │        └ <SpawnProcess name='SpawnProcess-4' parent=33170 started>
+    │    └ <function subprocess_started at 0x793b5b478540>
+    └ <SpawnProcess name='SpawnProcess-4' parent=33170 started>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/uvicorn/_subprocess.py", line 78, in subprocess_started
+    target(sockets=sockets)
+    │              └ [<socket.socket fd=4, family=2, type=1, proto=0, laddr=('0.0.0.0', 8000)>]
+    └ <bound method Server.run of <uvicorn.server.Server object at 0x793b5b499810>>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/uvicorn/server.py", line 62, in run
+    return asyncio.run(self.serve(sockets=sockets))
+           │       │   │    │             └ [<socket.socket fd=4, family=2, type=1, proto=0, laddr=('0.0.0.0', 8000)>]
+           │       │   │    └ <function Server.serve at 0x793b5b437b00>
+           │       │   └ <uvicorn.server.Server object at 0x793b5b499810>
+           │       └ <function run at 0x793b5fb56c00>
+           └ <module 'asyncio' from '/home/i4rt/.conda/envs/tms/lib/python3.11/asyncio/__init__.py'>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/asyncio/runners.py", line 190, in run
+    return runner.run(main)
+           │      │   └ <coroutine object Server.serve at 0x793b5b412570>
+           │      └ <function Runner.run at 0x793b5fb7f1a0>
+           └ <asyncio.runners.Runner object at 0x793b5b4c7710>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           │    │     │                  └ <Task pending name='Task-1' coro=<Server.serve() running at /home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/uvicorn/s...
+           │    │     └ <cyfunction Loop.run_until_complete at 0x793b5b453400>
+           │    └ <uvloop.Loop running=True closed=False debug=False>
+           └ <asyncio.runners.Runner object at 0x793b5b4c7710>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/uvicorn/protocols/http/httptools_impl.py", line 419, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+                   └ <uvicorn.middleware.proxy_headers.ProxyHeadersMiddleware object at 0x793b5b4e8890>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/uvicorn/middleware/proxy_headers.py", line 84, in __call__
+    return await self.app(scope, receive, send)
+                 │    │   │      │        └ <bound method RequestResponseCycle.send of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x793b5b0bee...
+                 │    │   │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x793b5b0...
+                 │    │   └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+                 │    └ <fastapi.applications.FastAPI object at 0x793b5b1c2710>
+                 └ <uvicorn.middleware.proxy_headers.ProxyHeadersMiddleware object at 0x793b5b4e8890>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+                           │      │        └ <bound method RequestResponseCycle.send of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x793b5b0bee...
+                           │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x793b5b0...
+                           └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/starlette/applications.py", line 123, in __call__
+    await self.middleware_stack(scope, receive, send)
+          │    │                │      │        └ <bound method RequestResponseCycle.send of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x793b5b0bee...
+          │    │                │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x793b5b0...
+          │    │                └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │    └ <starlette.middleware.errors.ServerErrorMiddleware object at 0x793b5bfac750>
+          └ <fastapi.applications.FastAPI object at 0x793b5b1c2710>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+          │    │   │      │        └ <function ServerErrorMiddleware.__call__.<locals>._send at 0x793b5b1e3b00>
+          │    │   │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x793b5b0...
+          │    │   └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │    └ <starlette.middleware.cors.CORSMiddleware object at 0x793b5bfacd50>
+          └ <starlette.middleware.errors.ServerErrorMiddleware object at 0x793b5bfac750>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/starlette/middleware/cors.py", line 91, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+          │    │               │      │        │                     └ Headers({'host': 'localhost:8000', 'connection': 'keep-alive', 'content-length': '58319', 'authorization': 'Basic YWRtaW5AZXh...
+          │    │               │      │        └ <function ServerErrorMiddleware.__call__.<locals>._send at 0x793b5b1e3b00>
+          │    │               │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x793b5b0...
+          │    │               └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │    └ <function CORSMiddleware.simple_response at 0x793b5e767560>
+          └ <starlette.middleware.cors.CORSMiddleware object at 0x793b5bfacd50>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/starlette/middleware/cors.py", line 146, in simple_response
+    await self.app(scope, receive, send)
+          │    │   │      │        └ functools.partial(<bound method CORSMiddleware.send of <starlette.middleware.cors.CORSMiddleware object at 0x793b5bfacd50>>, ...
+          │    │   │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x793b5b0...
+          │    │   └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │    └ <starlette.middleware.exceptions.ExceptionMiddleware object at 0x793b5bf81090>
+          └ <starlette.middleware.cors.CORSMiddleware object at 0x793b5bfacd50>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+          │                            │    │    │     │      │        └ functools.partial(<bound method CORSMiddleware.send of <starlette.middleware.cors.CORSMiddleware object at 0x793b5bfacd50>>, ...
+          │                            │    │    │     │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x793b5b0...
+          │                            │    │    │     └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │                            │    │    └ <starlette.requests.Request object at 0x793b5b0bf090>
+          │                            │    └ <fastapi.routing.APIRouter object at 0x793b5b1c2ad0>
+          │                            └ <starlette.middleware.exceptions.ExceptionMiddleware object at 0x793b5bf81090>
+          └ <function wrap_app_handling_exceptions at 0x793b5e70a340>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+          │   │      │        └ <function wrap_app_handling_exceptions.<locals>.wrapped_app.<locals>.sender at 0x793b5b237ce0>
+          │   │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x793b5b0...
+          │   └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          └ <fastapi.routing.APIRouter object at 0x793b5b1c2ad0>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/starlette/routing.py", line 762, in __call__
+    await self.middleware_stack(scope, receive, send)
+          │    │                │      │        └ <function wrap_app_handling_exceptions.<locals>.wrapped_app.<locals>.sender at 0x793b5b237ce0>
+          │    │                │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x793b5b0...
+          │    │                └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │    └ <bound method Router.app of <fastapi.routing.APIRouter object at 0x793b5b1c2ad0>>
+          └ <fastapi.routing.APIRouter object at 0x793b5b1c2ad0>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/starlette/routing.py", line 782, in app
+    await route.handle(scope, receive, send)
+          │     │      │      │        └ <function wrap_app_handling_exceptions.<locals>.wrapped_app.<locals>.sender at 0x793b5b237ce0>
+          │     │      │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x793b5b0...
+          │     │      └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │     └ <function Route.handle at 0x793b5e70bba0>
+          └ APIRoute(path='/api/v1/images/upload', name='upload_image', methods=['POST'])
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/starlette/routing.py", line 297, in handle
+    await self.app(scope, receive, send)
+          │    │   │      │        └ <function wrap_app_handling_exceptions.<locals>.wrapped_app.<locals>.sender at 0x793b5b237ce0>
+          │    │   │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x793b5b0...
+          │    │   └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │    └ <function request_response.<locals>.app at 0x793b5b236660>
+          └ APIRoute(path='/api/v1/images/upload', name='upload_image', methods=['POST'])
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/starlette/routing.py", line 77, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+          │                            │    │        │      │        └ <function wrap_app_handling_exceptions.<locals>.wrapped_app.<locals>.sender at 0x793b5b237ce0>
+          │                            │    │        │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x793b5b0...
+          │                            │    │        └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │                            │    └ <starlette.requests.Request object at 0x793b5bf03410>
+          │                            └ <function request_response.<locals>.app.<locals>.app at 0x793b5b237d80>
+          └ <function wrap_app_handling_exceptions at 0x793b5e70a340>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+          │   │      │        └ <function wrap_app_handling_exceptions.<locals>.wrapped_app.<locals>.sender at 0x793b5b237ec0>
+          │   │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x793b5b0...
+          │   └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          └ <function request_response.<locals>.app.<locals>.app at 0x793b5b237d80>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/starlette/routing.py", line 72, in app
+    response = await func(request)
+                     │    └ <starlette.requests.Request object at 0x793b5bf03410>
+                     └ <function get_request_handler.<locals>.app at 0x793b5b236700>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/fastapi/routing.py", line 294, in app
+    raw_response = await run_endpoint_function(
+                         └ <function run_endpoint_function at 0x793b5e709b20>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/fastapi/routing.py", line 191, in run_endpoint_function
+    return await dependant.call(**values)
+                 │         │      └ {'current_user': <app.models.models.User object at 0x793b58f75a90>, 's3_client': <app.core.s3client.S3Client object at 0x793b...
+                 │         └ <function upload_image at 0x793b5be02980>
+                 └ <fastapi.dependencies.models.Dependant object at 0x793b5b0a0410>
+
+> File "/home/i4rt/foton/tms/app/api/v1/s3.py", line 88, in upload_image
+    s3_client.put_bytes(
+    │         └ <function S3Client.put_bytes at 0x793b5cdad4e0>
+    └ <app.core.s3client.S3Client object at 0x793b5d6b8950>
+
+  File "/home/i4rt/foton/tms/app/core/s3client.py", line 39, in put_bytes
+    self.client.put_object(**params)
+    │    │      │            └ {'Bucket': 'tms-b1', 'Key': 'images/339a0cbf-63f2-44aa-8d0b-a597f51382c8/large/9d54846e-a5a2-44e8-bde4-4f31d54d6233.jpg', 'Bo...
+    │    │      └ <function ClientCreator._create_api_method.<locals>._api_call at 0x793b5c2205e0>
+    │    └ <botocore.client.S3 object at 0x793b5c41b110>
+    └ <app.core.s3client.S3Client object at 0x793b5d6b8950>
+
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/botocore/client.py", line 602, in _api_call
+    return self._make_api_call(operation_name, kwargs)
+           │    │              │               └ {'Bucket': 'tms-b1', 'Key': 'images/339a0cbf-63f2-44aa-8d0b-a597f51382c8/large/9d54846e-a5a2-44e8-bde4-4f31d54d6233.jpg', 'Bo...
+           │    │              └ 'PutObject'
+           │    └ <function BaseClient._make_api_call at 0x793b5cf19760>
+           └ <botocore.client.S3 object at 0x793b5c41b110>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/botocore/context.py", line 123, in wrapper
+    return func(*args, **kwargs)
+           │     │       └ {}
+           │     └ (<botocore.client.S3 object at 0x793b5c41b110>, 'PutObject', {'Bucket': 'tms-b1', 'Key': 'images/339a0cbf-63f2-44aa-8d0b-a597...
+           └ <function BaseClient._make_api_call at 0x793b5cf196c0>
+  File "/home/i4rt/.conda/envs/tms/lib/python3.11/site-packages/botocore/client.py", line 1078, in _make_api_call
+    raise error_class(parsed_response, operation_name)
+          │           │                └ 'PutObject'
+          │           └ {'Error': {'Code': 'SignatureDoesNotMatch', 'Message': 'The request signature we calculated does not match the signature you ...
+          └ <class 'botocore.exceptions.ClientError'>
+
+botocore.exceptions.ClientError: An error occurred (SignatureDoesNotMatch) when calling the PutObject operation: The request signature we calculated does not match the signature you provided. Check your key and signing method.
+2026-04-09 13:24:56 | INFO     | main:lifespan:29 - Shutting down application...
+2026-04-09 13:24:59 | INFO     | main:lifespan:20 - Starting application...
+2026-04-09 13:24:59 | INFO     | main:lifespan:25 - Database tables created/verified
+2026-04-09 13:27:57 | INFO     | main:lifespan:29 - Shutting down application...
+2026-04-09 13:27:59 | INFO     | main:lifespan:20 - Starting application...
+2026-04-09 13:28:00 | INFO     | main:lifespan:25 - Database tables created/verified
+2026-04-09 13:28:06 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-04-09 13:33:56 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-04-09 13:36:43 | INFO     | main:lifespan:29 - Shutting down application...
+2026-04-09 13:36:46 | INFO     | main:lifespan:20 - Starting application...
+2026-04-09 13:36:46 | INFO     | main:lifespan:25 - Database tables created/verified
+2026-04-09 13:36:50 | INFO     | main:lifespan:29 - Shutting down application...
+2026-04-09 13:36:52 | INFO     | main:lifespan:20 - Starting application...
+2026-04-09 13:36:52 | INFO     | main:lifespan:25 - Database tables created/verified
+2026-04-09 13:37:10 | INFO     | main:lifespan:29 - Shutting down application...
+2026-04-09 13:37:12 | INFO     | main:lifespan:20 - Starting application...
+2026-04-09 13:37:12 | INFO     | main:lifespan:25 - Database tables created/verified
+2026-04-09 13:37:17 | INFO     | main:lifespan:29 - Shutting down application...
+2026-04-09 13:37:43 | INFO     | main:lifespan:20 - Starting application...
+2026-04-09 13:37:43 | INFO     | main:lifespan:25 - Database tables created/verified
+2026-04-09 13:37:51 | INFO     | main:lifespan:29 - Shutting down application...
+2026-04-09 13:37:54 | INFO     | main:lifespan:20 - Starting application...
+2026-04-09 13:37:54 | INFO     | main:lifespan:25 - Database tables created/verified
+2026-04-09 13:38:13 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-04-09 13:38:36 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com
+2026-04-09 13:38:36 | ERROR    | main:global_exception_handler:55 - Unhandled exception: 'S3Client' object has no attribute 'delete_object'
+2026-04-09 13:38:49 | INFO     | main:lifespan:29 - Shutting down application...
+2026-04-09 13:38:51 | INFO     | main:lifespan:20 - Starting application...
+2026-04-09 13:38:51 | INFO     | main:lifespan:25 - Database tables created/verified
+2026-04-09 13:38:51 | INFO     | app.core.security:get_current_user:43 - User authenticated: admin@example.com

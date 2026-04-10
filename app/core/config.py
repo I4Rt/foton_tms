@@ -6,6 +6,10 @@ class Settings(BaseSettings):
     VERSION: str = "1.0.0"
     API_V1_PREFIX: str = "/api/v1"
 
+    S3_KEY: str         = ""
+    S3_IDENTIFYER: str  = ""
+    S3_BUCKET_NAME: str = "tms-b1"
+
     DATABASE_URL: str = "postgresql+asyncpg://postgres:password@localhost:5432/agile_pm"
 
     BCRYPT_ROUNDS: int = 12

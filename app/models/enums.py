@@ -4,6 +4,12 @@ class UserRole(str, enum.Enum):
     ADMINISTRATOR = "Administrator"
     MANAGER = "Manager"
     EXECUTOR = "Executor"
+    VIEWER = "Viewer"
+
+class ImageSize(str, enum.Enum):
+    s = "small"
+    m = "mid"
+    l = "large"
 
 class WorkItemType(str, enum.Enum):
     EPIC = "Epic"

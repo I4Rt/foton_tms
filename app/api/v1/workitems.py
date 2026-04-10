@@ -113,6 +113,51 @@ async def validate_assigned_to_in_project(user_id: UUID, project_id: UUID, db: A
     if not result.scalar_one_or_none():
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Assigned user is not a member of this project")
 
+async def validate_assignable_role(
+    user_id: UUID,
+    db: AsyncSession,
+    role_list: list[UserRole],
+) -> None:
+    """Check that assigned user is a member of the project and has an allowed role."""
+
+    project_member = (
+        await db.execute(
+            select(ProjectMember).where(ProjectMember.user_id == user_id)
+        )
+    ).scalar_one_or_none()
+
+    if project_member is None:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Assigned user is not a member of this project",
+        )
+
+    user = (
+        await db.execute(
+            select(User).where(User.id == user_id)
+        )
+    ).scalar_one_or_none()
+
+    if user is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Assigned user not found",
+        )
+
+    if user.role not in role_list:
+        allowed_roles = ", ".join(
+            role.value if hasattr(role, "value") else str(role)
+            for role in role_list
+        )
+        current_role = user.role.value if hasattr(user.role, "value") else str(user.role)
+
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=(
+                f"Assigned user has role '{current_role}', "
+                f"allowed roles: {allowed_roles}"
+            ),
+        )
 
 async def validate_iteration_in_project(iteration_id: UUID, project_id: UUID, db: AsyncSession):
     """Check that iteration belongs to the same project."""
@@ -216,6 +261,15 @@ async def create_work_item(
 
     if work_item_data.assigned_to is not None:
         await validate_assigned_to_in_project(work_item_data.assigned_to, project_id, db)
+        await validate_assignable_role(
+            work_item_data.assigned_to, 
+            db,
+            role_list=[
+                UserRole.ADMINISTRATOR, 
+                UserRole.MANAGER, 
+                UserRole.EXECUTOR
+            ]
+        )
     if work_item_data.iteration_id is not None:
         await validate_iteration_in_project(work_item_data.iteration_id, project_id, db)
 
@@ -296,6 +350,15 @@ async def update_work_item(
 
     if "assigned_to" in update_data and update_data["assigned_to"] is not None:
         await validate_assigned_to_in_project(update_data["assigned_to"], project_id, db)
+        await validate_assignable_role(
+            update_data["assigned_to"], 
+            db,
+            role_list=[
+                UserRole.ADMINISTRATOR, 
+                UserRole.MANAGER, 
+                UserRole.EXECUTOR
+            ]
+        )
 
     if "iteration_id" in update_data and update_data["iteration_id"] is not None:
         await validate_iteration_in_project(update_data["iteration_id"], project_id, db)
