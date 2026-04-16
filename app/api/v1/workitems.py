@@ -118,25 +118,9 @@ async def validate_assignable_role(
     db: AsyncSession,
     role_list: list[UserRole],
 ) -> None:
-    """Check that assigned user is a member of the project and has an allowed role."""
+    """Check that assigned user exists and has an allowed role."""
 
-    project_member = (
-        await db.execute(
-            select(ProjectMember).where(ProjectMember.user_id == user_id)
-        )
-    ).scalar_one_or_none()
-
-    if project_member is None:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Assigned user is not a member of this project",
-        )
-
-    user = (
-        await db.execute(
-            select(User).where(User.id == user_id)
-        )
-    ).scalar_one_or_none()
+    user = await db.get(User, user_id)
 
     if user is None:
         raise HTTPException(
@@ -149,7 +133,9 @@ async def validate_assignable_role(
             role.value if hasattr(role, "value") else str(role)
             for role in role_list
         )
-        current_role = user.role.value if hasattr(user.role, "value") else str(user.role)
+        current_role = (
+            user.role.value if hasattr(user.role, "value") else str(user.role)
+        )
 
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
