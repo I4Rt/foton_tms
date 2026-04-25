@@ -3,7 +3,7 @@ from decimal import Decimal
 from typing import Optional, List
 import uuid
 from sqlalchemy import (
-    String, Boolean, DECIMAL, Text, ForeignKey, Date,
+    String, Integer, Boolean, DECIMAL, Text, ForeignKey, Date,
     CheckConstraint, Index, UniqueConstraint, TIMESTAMP
 )
 from sqlalchemy.orm import Mapped, mapped_column, relationship
@@ -29,6 +29,11 @@ class User(Base):
     created_date: Mapped[datetime] = mapped_column(TIMESTAMP(timezone=True), default=datetime.utcnow, nullable=False)
     modified_date: Mapped[datetime] = mapped_column(TIMESTAMP(timezone=True), default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
 
+    # Gitea integration
+    gitea_id: Mapped[Optional[int]] = mapped_column(Integer, unique=True, nullable=True)
+    gitea_username: Mapped[Optional[str]] = mapped_column(String(255), unique=True, nullable=True)
+    gitea_token: Mapped[Optional[str]] = mapped_column(String(500), nullable=True)  # Personal Access Token
+
     # Relationships
     created_projects: Mapped[List["Project"]] = relationship(back_populates="creator", foreign_keys="Project.created_by")
     project_memberships: Mapped[List["ProjectMember"]] = relationship(back_populates="user", foreign_keys="ProjectMember.user_id")
@@ -40,7 +45,12 @@ class User(Base):
         CheckConstraint("capacity_per_day > 0 AND capacity_per_day <= 24", name="chk_capacity_range"),
         Index("idx_users_email", "email"),
         Index("idx_users_role", "role"),
+        Index("idx_users_gitea_username", "gitea_username"),
     )
+
+    @property
+    def is_gitea_synced(self) -> bool:
+        return self.gitea_id is not None and self.gitea_token is not None
 
 
 class Project(Base):
@@ -61,6 +71,10 @@ class Project(Base):
     members: Mapped[List["ProjectMember"]] = relationship(back_populates="project", cascade="all, delete-orphan")
     iterations: Mapped[List["Iteration"]] = relationship(back_populates="project", cascade="all, delete-orphan")
     work_items: Mapped[List["WorkItem"]] = relationship(back_populates="project", cascade="all, delete-orphan")
+    repositories: Mapped[List["Repository"]] = relationship(
+        back_populates="project",
+        cascade="all, delete-orphan",
+    )
 
     __table_args__ = (
         CheckConstraint("length(name) >= 3", name="chk_project_name_length"),
@@ -90,6 +104,7 @@ class ProjectMember(Base):
     # Relationships
     project: Mapped["Project"] = relationship(back_populates="members")
     user: Mapped["User"] = relationship(back_populates="project_memberships", foreign_keys=[user_id])
+
 
     __table_args__ = (
         Index("idx_project_members_user_id", "user_id"),
@@ -240,4 +255,29 @@ class AuditLog(Base):
         Index("idx_audit_entity", "entity_type", "entity_id"),
         Index("idx_audit_performed_by", "performed_by"),
         Index("idx_audit_performed_at", "performed_at"),
+    )
+
+
+class Repository(Base):
+    __tablename__ = "repositories"
+
+    id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+
+    project_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey("projects.id", ondelete="CASCADE"),
+        nullable=False,
+    )
+
+    # Gitea identifiers
+    gitea_id: Mapped[Optional[int]] = mapped_column(Integer, unique=True, nullable=True)
+    gitea_name: Mapped[Optional[str]] = mapped_column(String(255), unique=True, nullable=True)  # slug: "my-repo"
+
+    # Relationships
+    project: Mapped["Project"] = relationship(back_populates="repositories")
+
+    __table_args__ = (
+        UniqueConstraint("project_id", "gitea_name", name="uq_repository_project_gitea_name"),
+        Index("idx_repositories_project_id", "project_id"),
+        Index("idx_repositories_gitea_id", "gitea_id"),
     )

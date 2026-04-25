@@ -24,7 +24,7 @@ class DeleteImageResponse(BaseModel):
     deleted: bool
     key: str
 
-# ===== User Schemas =====
+# schemas/schemas.py
 
 class UserBase(BaseModel):
     email: EmailStr
@@ -51,13 +51,14 @@ class UserResponse(UserBase):
     role: UserRole
     is_active: bool
     created_date: datetime
+    gitea_username: Optional[str] = None
 
     class Config:
         from_attributes = True
 
 
 class UserMeResponse(UserResponse):
-    pass
+    gitea_token: Optional[str] = None
 
 
 # ===== Project Schemas =====
@@ -390,3 +391,29 @@ class ErrorResponse(BaseModel):
         "details": "Field 'name' is required",
         "timestamp": "2026-02-02T16:50:00Z"
     })
+
+
+
+# Repo schemas
+# schemas/schemas.py
+
+class RepositoryCreate(BaseModel):
+    gitea_name: str = Field(
+        ...,
+        min_length=1,
+        max_length=255,
+        pattern=r"^[a-zA-Z0-9._-]+$",   # Gitea slug — только ASCII
+        description="Slug репозитория: только [a-zA-Z0-9._-]",
+    )
+    description: str = Field(default="", max_length=500)
+    private: bool = True
+
+
+class RepositoryResponse(BaseModel):
+    id: UUID
+    project_id: UUID
+    gitea_id: Optional[int] = None
+    gitea_name: Optional[str] = None
+
+    class Config:
+        from_attributes = True

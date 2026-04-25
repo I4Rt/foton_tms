@@ -15,6 +15,11 @@ class Settings(BaseSettings):
     BCRYPT_ROUNDS: int = 12
     DEBUG: bool = False
 
+    # Gitea
+    GITEA_BASE_URL: str   = "http://it-saturn.ru:49336"
+    GITEA_ADMIN_TOKEN: str = "fc57f1d1570958b2e612e85e25f57947aba26991" # Personal Access Token администратора
+    GITEA_ORG_NAME: str   = "ABCLab"                                    # Хардкоженная организация портала
+
     class Config:
         env_file = ".env"
 
