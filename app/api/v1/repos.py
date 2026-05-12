@@ -18,6 +18,10 @@ from app.core.logging import logger
 from app.models.models import User, Project, Repository
 from app.models.enums import UserRole
 from app.schemas.schemas import RepositoryCreate, RepositoryResponse
+from app.services.gitea import ROLE_PERMISSION_MAP
+from app.core.gitea import RepoPermission
+from app.models.models import ProjectMember
+from app.services.gitea import *
 
 from loguru import logger
 
@@ -25,7 +29,6 @@ router = APIRouter(prefix="/projects/{project_id}/repositories", tags=["reposito
 
 
 # ── POST /projects/{project_id}/repositories ──────────────────────────────────
-
 @router.post("", response_model=RepositoryResponse, status_code=status.HTTP_201_CREATED)
 async def create_repository(
     project_id: UUID,
@@ -34,12 +37,10 @@ async def create_repository(
     current_user: User = Depends(require_role(UserRole.MANAGER, UserRole.ADMINISTRATOR)),
     gitea: GiteaService = Depends(get_gitea_service),
 ):
-    # Проверяем что проект существует и активен
     project = await db.get(Project, project_id)
     if not project or not project.is_active:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Project not found")
 
-    # Уникальность gitea_name в рамках проекта
     existing = await db.execute(
         select(Repository).where(
             Repository.project_id == project_id,
@@ -51,22 +52,49 @@ async def create_repository(
 
     repo = Repository(project_id=project_id)
     db.add(repo)
-    await db.flush()
 
-    gitea_data: GiteaRepoCreated = gitea.create_repository(
+    repo_gitea = gitea.create_repository(        # ← переименовано
         repo_name=repo_data.gitea_name,
         description=repo_data.description,
         private=repo_data.private,
     )
-    repo.gitea_id   = gitea_data.gitea_id
-    repo.gitea_name = gitea_data.gitea_name
+    repo.gitea_id   = repo_gitea.gitea_id
+    repo.gitea_name = repo_gitea.gitea_name
 
-    await db.flush()
-    await db.refresh(repo)
-
-    logger.info(
-        f"Repository created: {repo.gitea_name} (gitea_id={repo.gitea_id}) in project={project_id} by {current_user.email}"
+    users_result = await db.execute(
+        select(User)
+        .join(ProjectMember, ProjectMember.user_id == User.id)
+        .where(ProjectMember.project_id == project_id)
     )
+    users = users_result.scalars().all()
+
+    for user in users:
+        if not user.is_gitea_synced:
+            logger.info(f"User {user.email} not synced with Gitea, provisioning...")
+            user_gitea = await provision_gitea_user(user.id, UserCreate(  # ← переименовано
+                email=user.email,
+                display_name=user.display_name,
+                avatar_url=user.avatar_url,
+                capacity_per_day=user.capacity_per_day,
+                role=user.role,
+                password=build_gitea_initial_password(user.id),
+            ), gitea)
+            user.gitea_id       = user_gitea.gitea_id
+            user.gitea_username = user_gitea.gitea_username
+            user.gitea_token    = user_gitea.gitea_token
+            logger.info(f"Provisioned Gitea account for {user.email}: {user.gitea_username}")
+
+        permission = ROLE_PERMISSION_MAP.get(user.role, RepoPermission.READ)
+        gitea.add_user_to_repo(
+            username=user.gitea_username,
+            repo_name=repo.gitea_name,
+            permission=permission,
+        )
+        logger.info(f"Added {user.gitea_username} to repo {repo.gitea_name} with permission={permission.value}")
+
+    await db.flush()   # ← единственная точка записи в БД
+    await db.refresh(repo)
+    logger.info(f"Repository created: {repo.gitea_name} (gitea_id={repo.gitea_id}) in project={project_id} by {current_user.email}")
     return repo
 
 

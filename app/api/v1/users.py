@@ -7,7 +7,7 @@ from sqlalchemy.orm import selectinload
 from app.core.database import get_db
 from app.core.security import get_current_user, require_role, hash_password
 from app.core.logging import logger
-from app.models.models import User, Project, ProjectMember
+from app.models.models import User, Project, ProjectMember, Repository
 from app.models.enums import UserRole
 from app.schemas.schemas import UserCreate, UserUpdate, UserResponse, UserMeResponse, ProjectResponse
 
@@ -122,7 +122,6 @@ async def update_user(
     if not user:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
 
-    # Запоминаем старую роль ДО изменения
     role_changed = user_data.role is not None and user_data.role != user.role
 
     for field, value in user_data.model_dump(exclude_none=True).items():
@@ -130,14 +129,46 @@ async def update_user(
 
     await db.flush()
 
-    # Обновить права в Gitea только если роль изменилась и юзер уже синкнут
     if role_changed and user.is_gitea_synced:
+        # 1. Обновляем роль в организации Gitea
         gitea.update_user_permission(user.gitea_username, user_data.role)
+
+        # 2. Получаем новый permission по роли
+        new_permission = ROLE_PERMISSION_MAP.get(user_data.role, RepoPermission.READ)
+
+        # 3. Находим все репозитории проектов, в которых состоит пользователь
+        repos_result = await db.execute(
+            select(Repository)
+            .join(Project, Repository.project_id == Project.id)
+            .join(ProjectMember, ProjectMember.project_id == Project.id)
+            .where(
+                ProjectMember.user_id == user.id,
+                Project.is_active == True,
+            )
+        )
+        repos = repos_result.scalars().all()
+
+        # 4. Обновляем permission в каждом репозитории
+        for repo in repos:
+            try:
+                gitea.add_user_to_repo(
+                    username=user.gitea_username,
+                    repo_name=repo.gitea_name,
+                    permission=new_permission,
+                )
+                logger.info(
+                    f"Updated repo permission for {user.gitea_username} "
+                    f"in {repo.gitea_name}: {new_permission.value}"
+                )
+            except Exception as e:
+                logger.error(
+                    f"Failed to update repo permission for {user.gitea_username} "
+                    f"in {repo.gitea_name}: {e}"
+                )
 
     await db.refresh(user)
     logger.info("User updated: %s by %s", user.email, current_user.email)
     return user
-
 
 # ── DELETE /users/{user_id} ───────────────────────────────────────────────────
 
