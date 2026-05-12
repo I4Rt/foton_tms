@@ -484,7 +484,7 @@ async def create_work_session(
 
 
 @router.patch(
-    "{work_item_id}/sessions/{session_id}",
+    "/{work_item_id}/sessions/{session_id}",
     response_model=WorkSessionResponse,
 )
 async def update_work_session(
