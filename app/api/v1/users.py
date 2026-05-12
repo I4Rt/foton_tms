@@ -12,7 +12,7 @@ from app.models.enums import UserRole
 from app.schemas.schemas import UserCreate, UserUpdate, UserResponse, UserMeResponse, ProjectResponse
 
 from app.services.gitea import *
-from app.core.gitea import get_gitea_service, ROLE_PERMISSION_MAP
+from app.core.gitea import get_gitea_service
 
 router = APIRouter(prefix="/users", tags=["Users"])
 @router.get("", response_model=list[UserResponse])
