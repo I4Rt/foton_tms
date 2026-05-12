@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 
 # ── Маппинг ролей портала → права в Gitea ────────────────────────────────────
 
-_ROLE_PERMISSION_MAP: dict[UserRole, RepoPermission] = {
+ROLE_PERMISSION_MAP: dict[UserRole, RepoPermission] = {
     UserRole.ADMINISTRATOR: RepoPermission.ADMIN,
     UserRole.MANAGER:       RepoPermission.WRITE,
     UserRole.EXECUTOR:     RepoPermission.WRITE,
@@ -65,7 +65,7 @@ async def provision_gitea_user(
     role       = user_data.role
     username   = build_gitea_username(email)
     password   = build_gitea_initial_password(user_id)
-    permission = _ROLE_PERMISSION_MAP.get(role, RepoPermission.READ)
+    permission = ROLE_PERMISSION_MAP.get(role, RepoPermission.READ)
 
     logger.info(
         "Provisioning Gitea user | portal_id=%s email=%s username=%s permission=%s",

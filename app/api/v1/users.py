@@ -12,7 +12,7 @@ from app.models.enums import UserRole
 from app.schemas.schemas import UserCreate, UserUpdate, UserResponse, UserMeResponse, ProjectResponse
 
 from app.services.gitea import *
-from app.core.gitea import get_gitea_service
+from app.core.gitea import get_gitea_service, ROLE_PERMISSION_MAP
 
 router = APIRouter(prefix="/users", tags=["Users"])
 @router.get("", response_model=list[UserResponse])
@@ -130,11 +130,9 @@ async def update_user(
     await db.flush()
 
     if role_changed and user.is_gitea_synced:
-        # 1. Обновляем роль в организации Gitea
-        gitea.update_user_permission(user.gitea_username, user_data.role)
-
-        # 2. Получаем новый permission по роли
         new_permission = ROLE_PERMISSION_MAP.get(user_data.role, RepoPermission.READ)
+        gitea.update_user_permission(user.gitea_username, new_permission)
+
 
         # 3. Находим все репозитории проектов, в которых состоит пользователь
         repos_result = await db.execute(
