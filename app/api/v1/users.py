@@ -80,7 +80,7 @@ async def get_user(
 async def create_user(
     user_data: UserCreate,
     db: AsyncSession = Depends(get_db),
-    current_user: User = Depends(require_role(UserRole.ADMINISTRATOR)),
+    current_user: User = Depends(require_role(UserRole.ADMINISTRATOR, UserRole.MANAGER)),
     gitea: GiteaService = Depends(get_gitea_service),
 ):
     existing = await db.execute(select(User).where(User.email == user_data.email))
@@ -115,13 +115,22 @@ async def update_user(
     user_id: UUID,
     user_data: UserUpdate,
     db: AsyncSession = Depends(get_db),
-    current_user: User = Depends(require_role(UserRole.ADMINISTRATOR)),
+    current_user: User = Depends(get_current_user),
     gitea: GiteaService = Depends(get_gitea_service),
 ):
     user = await db.get(User, user_id)
     if not user:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
+        raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail="User not found")
 
+    if user.role == UserRole.ADMINISTRATOR:
+        if current_user.id == user.id:
+            if user_data.role != UserRole.ADMINISTRATOR:
+                raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail="Administrator role can not be changed")
+    
+    if current_user.role not in [UserRole.ADMINISTRATOR, UserRole.MANAGER]:
+        if user_data.role != user.role:
+            raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail="Only Adminuistrator or admin can change role")
+        
     role_changed = user_data.role is not None and user_data.role != user.role
 
     for field, value in user_data.model_dump(exclude_none=True).items():

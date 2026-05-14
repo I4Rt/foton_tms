@@ -267,7 +267,7 @@ async def move_task_in_sprint(
     task_id: UUID,
     move_data: DropPlanTaskMove,
     db: AsyncSession = Depends(get_db),
-    current_user: User = Depends(require_role(UserRole.MANAGER, UserRole.ADMINISTRATOR))
+    current_user: User = Depends(require_role(UserRole.MANAGER, UserRole.ADMINISTRATOR, UserRole.EXECUTOR))
 ):
     """Move a task within the sprint by changing its start/end dates."""
     iteration = await _get_iteration_or_404(iteration_id, project_id, db)

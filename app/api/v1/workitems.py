@@ -377,7 +377,7 @@ async def delete_work_item(
     project_id: UUID,
     work_item_id: UUID,
     db: AsyncSession = Depends(get_db),
-    current_user: User = Depends(require_role(UserRole.MANAGER, UserRole.ADMINISTRATOR))
+    current_user: User = Depends(require_role(UserRole.EXECUTOR, UserRole.MANAGER, UserRole.ADMINISTRATOR))
 ):
     """Delete work item."""
     await check_project_access(project_id, current_user, db)
