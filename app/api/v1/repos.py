@@ -128,3 +128,29 @@ async def delete_repository(
         "Repository deleted: %s (gitea_id=%s) from project=%s by %s",
         repo.gitea_name, repo.gitea_id, project_id, current_user.email,
     )
+
+@router.get("", response_model=list[RepositoryResponse])
+async def get_project_repositories(
+    project_id: UUID,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(require_role(
+        UserRole.VIEWER,
+        UserRole.EXECUTOR,
+        UserRole.MANAGER,
+        UserRole.ADMINISTRATOR,
+    )),
+):
+    project = await db.get(Project, project_id)
+    if not project or not project.is_active:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Project not found")
+
+    result = await db.execute(
+        select(Repository).where(Repository.project_id == project_id)
+    )
+    repositories = result.scalars().all()
+
+    logger.info(
+        "Repositories fetched: project=%s count=%d by %s",
+        project_id, len(repositories), current_user.email,
+    )
+    return repositories
