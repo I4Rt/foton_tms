@@ -164,7 +164,7 @@ class WorkItemCreate(WorkItemBase):
     parent_id: Optional[UUID] = None
     assigned_to: Optional[UUID] = None
     iteration_id: Optional[UUID] = None
-    estimation_hours: Optional[Decimal] = Field(None, gt=0)
+    estimation_hours: Optional[Decimal] = Field(None, ge=0)
     start_date: Optional[date] = None
     end_date: Optional[date] = None
 
@@ -185,7 +185,7 @@ class WorkItemUpdate(BaseModel):
     priority: Optional[Priority] = None
     assigned_to: Optional[UUID] = None
     iteration_id: Optional[UUID] = None
-    estimation_hours: Optional[Decimal] = Field(None, gt=0)
+    estimation_hours: Optional[Decimal] = Field(None, ge=0)
     tags: Optional[List[str]] = None
     start_date: Optional[date] = None
     end_date: Optional[date] = None
