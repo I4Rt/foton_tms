@@ -32,6 +32,7 @@ _TEAM_UNITS = ["repo.code", "repo.issues", "repo.pulls", "repo.releases"]
 _USER_TOKEN_SCOPES = [
     "write:repository",
     "read:user",
+    "write:user",
     "write:issue",
     "read:organization",
     "read:notification",
