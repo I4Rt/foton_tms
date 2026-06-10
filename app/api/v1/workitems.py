@@ -24,10 +24,53 @@ router = APIRouter(prefix="/projects/{project_id}/workitems", tags=["Work Items"
 # ===== Helpers =====
 
 
-async def _compute_hours(work_item_id: UUID, db: AsyncSession) -> tuple[Decimal, Optional[Decimal]]:
+async def _compute_hours(
+    work_item_id: UUID,
+    db: AsyncSession,
+    visited: Optional[set[UUID]] = None,
+) -> tuple[Decimal, Optional[Decimal]]:
     """Compute completed_hours and remaining_hours from work sessions.
     Includes time from an open (not ended) session calculated as now - started_at.
     """
+    if visited is None:
+        visited = set()
+    if work_item_id in visited:
+        return Decimal(0), None
+    visited.add(work_item_id)
+
+    item_result = await db.execute(
+        select(WorkItem).where(WorkItem.id == work_item_id)
+    )
+    work_item = item_result.scalar_one_or_none()
+    if not work_item:
+        return Decimal(0), None
+
+    # Parent items (UserStory/Feature/Epic): aggregate from direct children.
+    if work_item.type != WorkItemType.TASK:
+        children_result = await db.execute(
+            select(WorkItem.id, WorkItem.estimation_hours).where(WorkItem.parent_id == work_item_id)
+        )
+        children = children_result.all()
+
+        if not children:
+            completed = Decimal(0)
+            remaining = (
+                work_item.estimation_hours - completed
+                if work_item.estimation_hours is not None
+                else None
+            )
+            return completed, remaining
+
+        total_completed = Decimal(0)
+        total_estimation = Decimal(0)
+        for child_id, child_estimation in children:
+            child_completed, _ = await _compute_hours(child_id, db, visited=visited)
+            total_completed += child_completed
+            total_estimation += child_estimation or Decimal(0)
+
+        remaining = total_estimation - total_completed
+        return total_completed, remaining
+
     # Сумма закрытых сессий
     closed_result = await db.execute(
         select(func.coalesce(func.sum(WorkSession.total_hours), 0))
@@ -57,13 +100,44 @@ async def _compute_hours(work_item_id: UUID, db: AsyncSession) -> tuple[Decimal,
     completed = closed_hours + open_hours
 
     # remaining
-    est_result = await db.execute(
-        select(WorkItem.estimation_hours).where(WorkItem.id == work_item_id)
-    )
-    estimation = est_result.scalar()
-    remaining = (estimation - completed) if estimation is not None else None
+    remaining = (work_item.estimation_hours - completed) if work_item.estimation_hours is not None else None
 
     return completed, remaining
+
+
+async def _recalculate_parent_estimations(parent_id: UUID, project_id: UUID, db: AsyncSession) -> None:
+    """Recalculate estimation_hours for parent chain as sum of direct children estimations."""
+    current_parent_id = parent_id
+    visited_parent_ids = set()
+    while current_parent_id is not None:
+        if current_parent_id in visited_parent_ids:
+            break
+        visited_parent_ids.add(current_parent_id)
+
+        parent_result = await db.execute(
+            select(WorkItem).where(
+                WorkItem.id == current_parent_id,
+                WorkItem.project_id == project_id,
+            )
+        )
+        parent = parent_result.scalar_one_or_none()
+        if not parent:
+            break
+
+        children_result = await db.execute(
+            select(WorkItem.estimation_hours).where(
+                WorkItem.parent_id == current_parent_id,
+                WorkItem.project_id == project_id,
+            )
+        )
+        child_estimations = children_result.scalars().all()
+        new_estimation = (
+            sum((child_estimation or Decimal(0)) for child_estimation in child_estimations)
+            if child_estimations
+            else None
+        )
+        parent.estimation_hours = new_estimation
+        current_parent_id = parent.parent_id
 
 
 
@@ -305,6 +379,10 @@ async def create_work_item(
     await db.flush()
     await db.refresh(work_item)
 
+    if work_item.parent_id is not None:
+        await _recalculate_parent_estimations(work_item.parent_id, project_id, db)
+        await db.flush()
+
     logger.info(f"Work item created: {work_item.title} by {current_user.email}")
     return await _build_work_item_response(work_item, db)
 
@@ -327,6 +405,7 @@ async def update_work_item(
     if not work_item:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Work item not found")
 
+    old_parent_id = work_item.parent_id
     update_data = work_item_data.model_dump(exclude_unset=True)
 
     if "parent_id" in update_data and update_data["parent_id"] is not None:
@@ -368,6 +447,21 @@ async def update_work_item(
     await db.flush()
     await db.refresh(work_item)
 
+    parent_ids_to_recalculate = set()
+    if old_parent_id is not None:
+        parent_ids_to_recalculate.add(old_parent_id)
+    if work_item.parent_id is not None:
+        parent_ids_to_recalculate.add(work_item.parent_id)
+
+    if (
+        "estimation_hours" in update_data
+        or "parent_id" in update_data
+        or "state" in update_data
+    ):
+        for parent_id in parent_ids_to_recalculate:
+            await _recalculate_parent_estimations(parent_id, project_id, db)
+        await db.flush()
+
     logger.info(f"Work item updated: {work_item.title} by {current_user.email}")
     return await _build_work_item_response(work_item, db)
 
@@ -389,8 +483,14 @@ async def delete_work_item(
     if not work_item:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Work item not found")
 
+    parent_id = work_item.parent_id
     await db.delete(work_item)
     await db.flush()
+
+    if parent_id is not None:
+        await _recalculate_parent_estimations(parent_id, project_id, db)
+        await db.flush()
+
     logger.info(f"Work item deleted: {work_item.title} by {current_user.email}")
 
 
