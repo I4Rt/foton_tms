@@ -8,7 +8,7 @@ from app.core.config import get_settings
 from app.core.database import engine, Base
 from app.core.s3client import s3_client
 from app.core.logging import logger
-from app.api.v1 import users, projects, workitems, iterations, dropplan, calendar, work_sessions, s3, repos
+from app.api.v1 import users, projects, workitems, iterations, dropplan, calendar, work_sessions, s3, repos, news
 
 
 settings = get_settings()
@@ -75,6 +75,7 @@ app.include_router(dropplan.router, prefix=settings.API_V1_PREFIX)
 app.include_router(work_sessions.router, prefix=settings.API_V1_PREFIX)
 app.include_router(s3.router, prefix=settings.API_V1_PREFIX)
 app.include_router(repos.router, prefix=settings.API_V1_PREFIX)
+app.include_router(news.router, prefix=settings.API_V1_PREFIX)
 
 
 @app.get("/health")

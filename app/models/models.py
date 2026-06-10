@@ -281,3 +281,52 @@ class Repository(Base):
         Index("idx_repositories_project_id", "project_id"),
         Index("idx_repositories_gitea_id", "gitea_id"),
     )
+
+
+class News(Base):
+    __tablename__ = "news"
+
+    id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    slug: Mapped[str] = mapped_column(String(255), unique=True, nullable=False)
+    title: Mapped[str] = mapped_column(String(255), nullable=False)
+    image_url: Mapped[str] = mapped_column(String(500), nullable=False)
+    content: Mapped[str] = mapped_column(Text, nullable=False)
+    created_by: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), ForeignKey("users.id", ondelete="RESTRICT"), nullable=False)
+    created_date: Mapped[datetime] = mapped_column(TIMESTAMP(timezone=True), default=datetime.utcnow, nullable=False)
+    modified_date: Mapped[datetime] = mapped_column(TIMESTAMP(timezone=True), default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
+
+    # Relationships
+    team_members: Mapped[List["NewsTeamMember"]] = relationship(
+        back_populates="news",
+        cascade="all, delete-orphan",
+    )
+
+    __table_args__ = (
+        CheckConstraint("length(title) >= 3", name="chk_news_title_length"),
+        CheckConstraint("length(content) <= 10000", name="chk_news_content_max_length"),
+        Index("idx_news_slug", "slug"),
+        Index("idx_news_created_date", "created_date"),
+    )
+
+
+class NewsTeamMember(Base):
+    __tablename__ = "news_team_members"
+
+    news_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey("news.id", ondelete="CASCADE"),
+        primary_key=True,
+    )
+    user_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey("users.id", ondelete="RESTRICT"),
+        primary_key=True,
+    )
+
+    # Relationships
+    news: Mapped["News"] = relationship(back_populates="team_members")
+    user: Mapped["User"] = relationship()
+
+    __table_args__ = (
+        Index("idx_news_team_members_user_id", "user_id"),
+    )

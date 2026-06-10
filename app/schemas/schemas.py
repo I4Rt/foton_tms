@@ -382,6 +382,28 @@ class NonWorkingDayResponse(BaseModel):
         from_attributes = True
 
 
+# ===== News Schemas =====
+
+class NewsCreate(BaseModel):
+    image_url: str = Field(..., min_length=1, max_length=500)
+    title: str = Field(..., min_length=3, max_length=255)
+    content: str = Field(..., min_length=1, max_length=10000)
+    team_member_ids: List[UUID] = Field(default_factory=list)
+
+
+class NewsListItemResponse(BaseModel):
+    id: UUID
+    slug: str
+    image_url: str
+    title: str
+    created_date: datetime
+    team_member_ids: List[UUID]
+
+
+class NewsResponse(NewsListItemResponse):
+    content: str
+
+
 # ===== Error Schema =====
 
 class ErrorResponse(BaseModel):
