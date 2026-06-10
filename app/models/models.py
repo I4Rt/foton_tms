@@ -168,7 +168,7 @@ class WorkItem(Base):
 
     __table_args__ = (
         CheckConstraint("length(title) >= 3", name="chk_workitem_title_length"),
-        CheckConstraint("estimation_hours > 0 OR estimation_hours IS NULL", name="chk_estimation_positive"),
+        CheckConstraint("estimation_hours >= 0 OR estimation_hours IS NULL", name="chk_estimation_positive"),
         CheckConstraint(
             "(start_date IS NULL AND end_date IS NULL) OR "
             "(start_date IS NOT NULL AND end_date IS NOT NULL AND end_date >= start_date)",
