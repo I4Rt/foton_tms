@@ -110,7 +110,7 @@ async def delete_repository(
 ):
     repo = await db.execute(
         select(Repository).where(
-            Repository.id == project_id,
+            Repository.id == repo_id,
             Repository.project_id == project_id,
         )
     )
