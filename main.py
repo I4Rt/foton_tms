@@ -1,3 +1,4 @@
+import asyncio
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, Request
@@ -9,6 +10,7 @@ from app.core.database import engine, Base
 from app.core.s3client import s3_client
 from app.core.logging import logger
 from app.api.v1 import users, projects, workitems, iterations, dropplan, calendar, work_sessions, s3, repos, news
+from app.services.iteration_status import run_daily_iteration_state_sync
 
 
 settings = get_settings()
@@ -24,9 +26,19 @@ async def lifespan(app: FastAPI):
         await conn.run_sync(Base.metadata.create_all)
     logger.info("Database tables created/verified")
 
+    iteration_state_sync_task = asyncio.create_task(
+        run_daily_iteration_state_sync()
+    )
+    logger.info("Daily iteration state sync task started")
+
     yield
 
     logger.info("Shutting down application...")
+    iteration_state_sync_task.cancel()
+    try:
+        await iteration_state_sync_task
+    except asyncio.CancelledError:
+        logger.info("Daily iteration state sync task stopped")
     await engine.dispose()
 
 
