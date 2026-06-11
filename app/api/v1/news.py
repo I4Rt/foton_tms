@@ -12,7 +12,7 @@ from app.core.logging import logger
 from app.core.security import require_role
 from app.models.enums import UserRole
 from app.models.models import News, NewsTeamMember, User
-from app.schemas.schemas import NewsCreate, NewsListItemResponse, NewsResponse
+from app.schemas.schemas import NewsCreate, NewsListItemResponse, NewsResponse, NewsUpdate
 
 
 router = APIRouter(prefix="/news", tags=["News"])
@@ -28,14 +28,19 @@ def _slugify(value: str) -> str:
     return slug or "news"
 
 
-async def _build_unique_slug(title: str, db: AsyncSession) -> str:
+async def _build_unique_slug(
+    title: str,
+    db: AsyncSession,
+    exclude_news_id: Optional[UUID] = None,
+) -> str:
     base_slug = _slugify(title)
     candidate = base_slug
     suffix = 2
 
     while True:
         result = await db.execute(select(News.id).where(News.slug == candidate))
-        if result.scalar_one_or_none() is None:
+        existing_id = result.scalar_one_or_none()
+        if existing_id is None or existing_id == exclude_news_id:
             return candidate
         candidate = f"{base_slug}-{suffix}"
         suffix += 1
@@ -102,6 +107,7 @@ async def create_news(
         title=news_data.title,
         image_url=news_data.image_url,
         content=news_data.content,
+        avaliable=news_data.avaliable,
         created_by=current_user.id,
     )
     db.add(news)
@@ -124,6 +130,60 @@ async def create_news(
         content=news.content,
         created_date=news.created_date,
         team_member_ids=team_member_ids,
+        avaliable=news.avaliable,
+    )
+
+
+@router.patch("/{news_id}", response_model=NewsResponse)
+async def update_news(
+    news_id: UUID,
+    news_data: NewsUpdate,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(require_role(UserRole.ADMINISTRATOR, UserRole.MANAGER)),
+):
+    news = await db.get(News, news_id)
+    if not news:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="News not found")
+
+    update_data = news_data.model_dump(exclude_unset=True, exclude={"team_member_ids"})
+
+    if "title" in update_data:
+        update_data["slug"] = await _build_unique_slug(
+            update_data["title"],
+            db,
+            exclude_news_id=news.id,
+        )
+
+    for field, value in update_data.items():
+        setattr(news, field, value)
+
+    if news_data.team_member_ids is not None:
+        validated_ids = await _validate_team_member_ids(news_data.team_member_ids, db)
+        await db.execute(
+            NewsTeamMember.__table__.delete().where(NewsTeamMember.news_id == news.id)
+        )
+        if validated_ids:
+            db.add_all(
+                [NewsTeamMember(news_id=news.id, user_id=user_id) for user_id in validated_ids]
+            )
+        team_member_ids = validated_ids
+    else:
+        team_members_map = await _get_team_members_for_news_ids([news.id], db)
+        team_member_ids = team_members_map.get(news.id, [])
+
+    await db.flush()
+    await db.refresh(news)
+
+    logger.info("News updated: %s by %s", news.slug, current_user.email)
+    return NewsResponse(
+        id=news.id,
+        slug=news.slug,
+        image_url=news.image_url,
+        title=news.title,
+        content=news.content,
+        created_date=news.created_date,
+        team_member_ids=team_member_ids,
+        avaliable=news.avaliable,
     )
 
 
@@ -147,17 +207,16 @@ async def delete_news(
 async def list_news(
     from_index: Optional[int] = Query(None, alias="from"),
     to_index: Optional[int] = Query(None, alias="to"),
+    avaliable: Optional[bool] = Query(None),
     db: AsyncSession = Depends(get_db),
 ):
     start, limit = _normalize_pagination_bounds(from_index, to_index)
     if limit == 0:
         return []
 
-    query = (
-        select(News)
-        .order_by(News.created_date.desc(), News.id.desc())
-        .offset(start - 1)
-    )
+    query = select(News).order_by(News.created_date.desc(), News.id.desc()).offset(start - 1)
+    if avaliable is not None:
+        query = query.where(News.avaliable == avaliable)
     if limit is not None:
         query = query.limit(limit)
 
@@ -173,6 +232,7 @@ async def list_news(
             title=item.title,
             created_date=item.created_date,
             team_member_ids=team_members_map.get(item.id, []),
+            avaliable=item.avaliable,
         )
         for item in news_items
     ]
@@ -194,4 +254,5 @@ async def get_news(news_slug: str, db: AsyncSession = Depends(get_db)):
         content=news.content,
         created_date=news.created_date,
         team_member_ids=team_members_map.get(news.id, []),
+        avaliable=news.avaliable,
     )

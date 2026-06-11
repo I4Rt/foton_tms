@@ -389,6 +389,15 @@ class NewsCreate(BaseModel):
     title: str = Field(..., min_length=3, max_length=255)
     content: str = Field(..., min_length=1, max_length=10000)
     team_member_ids: List[UUID] = Field(default_factory=list)
+    avaliable: bool = True
+
+
+class NewsUpdate(BaseModel):
+    image_url: Optional[str] = Field(None, min_length=1, max_length=500)
+    title: Optional[str] = Field(None, min_length=3, max_length=255)
+    content: Optional[str] = Field(None, min_length=1, max_length=10000)
+    team_member_ids: Optional[List[UUID]] = None
+    avaliable: Optional[bool] = None
 
 
 class NewsListItemResponse(BaseModel):
@@ -398,6 +407,7 @@ class NewsListItemResponse(BaseModel):
     title: str
     created_date: datetime
     team_member_ids: List[UUID]
+    avaliable: bool
 
 
 class NewsResponse(NewsListItemResponse):
