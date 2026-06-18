@@ -18,6 +18,34 @@ from app.schemas.schemas import NewsCreate, NewsListItemResponse, NewsResponse, 
 router = APIRouter(prefix="/news", tags=["News"])
 
 
+def _get_news_available_field_name() -> Optional[str]:
+    if hasattr(News, "available"):
+        return "available"
+    if hasattr(News, "avaliable"):
+        return "avaliable"
+    return None
+
+
+NEWS_AVAILABLE_FIELD = _get_news_available_field_name()
+
+
+def _set_news_available_payload(payload: dict, value: bool) -> None:
+    if NEWS_AVAILABLE_FIELD is not None:
+        payload[NEWS_AVAILABLE_FIELD] = value
+
+
+def _get_news_available_value(news: News) -> bool:
+    if hasattr(news, "available"):
+        value = getattr(news, "available")
+        if value is not None:
+            return value
+    if hasattr(news, "avaliable"):
+        value = getattr(news, "avaliable")
+        if value is not None:
+            return value
+    return True
+
+
 def _slugify(value: str) -> str:
     normalized = (
         unicodedata.normalize("NFKD", value)
@@ -102,14 +130,15 @@ async def create_news(
     team_member_ids = await _validate_team_member_ids(news_data.team_member_ids, db)
     slug = await _build_unique_slug(news_data.title, db)
 
-    news = News(
-        slug=slug,
-        title=news_data.title,
-        image_url=news_data.image_url,
-        content=news_data.content,
-        avaliable=news_data.avaliable,
-        created_by=current_user.id,
-    )
+    news_payload = {
+        "slug": slug,
+        "title": news_data.title,
+        "image_url": news_data.image_url,
+        "content": news_data.content,
+        "created_by": current_user.id,
+    }
+    _set_news_available_payload(news_payload, news_data.avaliable)
+    news = News(**news_payload)
     db.add(news)
     await db.flush()
 
@@ -130,7 +159,7 @@ async def create_news(
         content=news.content,
         created_date=news.created_date,
         team_member_ids=team_member_ids,
-        avaliable=news.avaliable,
+        avaliable=_get_news_available_value(news),
     )
 
 
@@ -153,6 +182,10 @@ async def update_news(
             db,
             exclude_news_id=news.id,
         )
+
+    if "avaliable" in update_data:
+        avaliable_value = update_data.pop("avaliable")
+        _set_news_available_payload(update_data, avaliable_value)
 
     for field, value in update_data.items():
         setattr(news, field, value)
@@ -183,7 +216,7 @@ async def update_news(
         content=news.content,
         created_date=news.created_date,
         team_member_ids=team_member_ids,
-        avaliable=news.avaliable,
+        avaliable=_get_news_available_value(news),
     )
 
 
@@ -215,8 +248,8 @@ async def list_news(
         return []
 
     query = select(News).order_by(News.created_date.desc(), News.id.desc()).offset(start - 1)
-    if avaliable is not None:
-        query = query.where(News.avaliable == avaliable)
+    if avaliable is not None and NEWS_AVAILABLE_FIELD is not None:
+        query = query.where(getattr(News, NEWS_AVAILABLE_FIELD) == avaliable)
     if limit is not None:
         query = query.limit(limit)
 
@@ -232,7 +265,7 @@ async def list_news(
             title=item.title,
             created_date=item.created_date,
             team_member_ids=team_members_map.get(item.id, []),
-            avaliable=item.avaliable,
+            avaliable=_get_news_available_value(item),
         )
         for item in news_items
     ]
@@ -254,5 +287,5 @@ async def get_news(news_slug: str, db: AsyncSession = Depends(get_db)):
         content=news.content,
         created_date=news.created_date,
         team_member_ids=team_members_map.get(news.id, []),
-        avaliable=news.avaliable,
+        avaliable=_get_news_available_value(news),
     )
