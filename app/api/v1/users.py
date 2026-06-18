@@ -9,7 +9,14 @@ from app.core.security import get_current_user, require_role, hash_password
 from app.core.logging import logger
 from app.models.models import User, Project, ProjectMember, Repository
 from app.models.enums import UserRole
-from app.schemas.schemas import UserCreate, UserUpdate, UserResponse, UserMeResponse, ProjectResponse
+from app.schemas.schemas import (
+    UserCreate,
+    UserUpdate,
+    UserResponse,
+    UserMeResponse,
+    UserPublicInfoResponse,
+    ProjectResponse,
+)
 
 from app.services.gitea import *
 from app.core.gitea import get_gitea_service
@@ -61,6 +68,22 @@ async def get_me(
 
 
 # ── GET /users/{user_id} ──────────────────────────────────────────────────────
+
+@router.get("/public/{user_id}", response_model=UserPublicInfoResponse)
+async def get_public_user_info(
+    user_id: UUID,
+    db: AsyncSession = Depends(get_db),
+):
+    user = await db.get(User, user_id)
+    if not user:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
+
+    return UserPublicInfoResponse(
+        full_name=user.display_name,
+        position=user.position,
+        avatar_url=user.avatar_url,
+    )
+
 
 @router.get("/{user_id}", response_model=UserResponse)
 async def get_user(

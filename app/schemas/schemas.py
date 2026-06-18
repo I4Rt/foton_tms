@@ -63,6 +63,12 @@ class UserMeResponse(UserResponse):
     gitea_token: Optional[str] = None
 
 
+class UserPublicInfoResponse(BaseModel):
+    full_name: str
+    position: Optional[str] = None
+    avatar_url: Optional[str] = None
+
+
 # ===== Project Schemas =====
 
 class ProjectBase(BaseModel):
