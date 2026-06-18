@@ -29,6 +29,7 @@ class DeleteImageResponse(BaseModel):
 class UserBase(BaseModel):
     email: EmailStr
     display_name: str = Field(..., min_length=1, max_length=255)
+    position: Optional[str] = Field(None, max_length=255)
     avatar_url: Optional[str] = None
     capacity_per_day: Decimal = Field(default=Decimal("8.0"), gt=0, le=24)
 
@@ -40,6 +41,7 @@ class UserCreate(UserBase):
 
 class UserUpdate(BaseModel):
     display_name: Optional[str] = Field(None, min_length=1, max_length=255)
+    position: Optional[str] = Field(None, max_length=255)
     avatar_url: Optional[str] = None
     role: Optional[UserRole] = None
     is_active: Optional[bool] = None

@@ -91,6 +91,7 @@ async def create_user(
         email=user_data.email,
         password_hash=hash_password(user_data.password),
         display_name=user_data.display_name,
+        position=user_data.position,
         avatar_url=user_data.avatar_url,
         role=user_data.role,
         capacity_per_day=user_data.capacity_per_day,

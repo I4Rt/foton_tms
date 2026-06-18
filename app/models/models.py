@@ -22,6 +22,7 @@ class User(Base):
     email: Mapped[str] = mapped_column(String(255), unique=True, nullable=False)
     password_hash: Mapped[str] = mapped_column(String(255), nullable=False)
     display_name: Mapped[str] = mapped_column(String(255), nullable=False)
+    position: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
     avatar_url: Mapped[Optional[str]] = mapped_column(String(500))
     role: Mapped[UserRole] = mapped_column(String(50), nullable=False)
     is_active: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
