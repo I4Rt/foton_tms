@@ -36,7 +36,7 @@ async def get_current_user(
 
     if not user.is_active:
         raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
+            status_code=status.HTTP_423_LOCKED,
             detail="User account is deactivated"
         )
 
