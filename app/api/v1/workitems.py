@@ -273,6 +273,28 @@ async def list_work_items(
     return [await _build_work_item_response(wi, db) for wi in items]
 
 
+@router.get("/overdue", response_model=List[WorkItemResponse])
+async def list_overdue_work_items(
+    project_id: UUID,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    """Get overdue work items for project."""
+    await check_project_access(project_id, current_user, db)
+
+    today = datetime.now(timezone.utc).date()
+    result = await db.execute(
+        select(WorkItem).where(
+            WorkItem.project_id == project_id,
+            WorkItem.end_date.is_not(None),
+            WorkItem.end_date < today,
+            WorkItem.state.notin_([WorkItemState.CLOSED, WorkItemState.REMOVED]),
+        ).order_by(WorkItem.end_date.asc())
+    )
+    items = result.scalars().all()
+    return [await _build_work_item_response(wi, db) for wi in items]
+
+
 @router.get("/{work_item_id}", response_model=WorkItemResponse)
 async def get_work_item(
     project_id: UUID,

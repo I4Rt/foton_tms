@@ -260,6 +260,35 @@ class WorkSessionsByDayResponse(BaseModel):
     total_hours: Decimal
 
 
+class SessionAnalyticsItem(BaseModel):
+    id: UUID
+    started_at: datetime
+    ended_at: Optional[datetime]
+    description: Optional[str]
+    total_hours: Optional[Decimal]
+    user_id: UUID
+    user_name: str
+    iteration_id: Optional[UUID]
+    iteration_name: Optional[str]
+    task_id: UUID
+    task_title: str
+
+
+class SessionAnalyticsByUser(BaseModel):
+    user_id: UUID
+    user_name: str
+    session_count: int
+    total_hours: Decimal
+    sessions: List[SessionAnalyticsItem]
+
+
+class ProjectSessionsAnalyticsResponse(BaseModel):
+    total_hours: Decimal
+    total_sessions: int
+    total_users: int
+    users: List[SessionAnalyticsByUser]
+
+
 # ===== Drop Plan Schemas =====
 
 class DropPlanTaskResponse(BaseModel):

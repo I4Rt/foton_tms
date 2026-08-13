@@ -1,6 +1,6 @@
 from typing import List
 from uuid import UUID
-from datetime import date
+from datetime import date, datetime
 
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -10,7 +10,7 @@ from app.core.database import get_db
 from app.core.security import get_current_user, require_role
 from app.core.logging import logger
 from app.models.models import Iteration, Project, WorkItem, ProjectMember, User
-from app.models.enums import UserRole
+from app.models.enums import UserRole, IterationState
 from app.schemas.schemas import IterationCreate, IterationUpdate, IterationResponse, WorkItemResponse
 
 router = APIRouter(prefix="/projects/{project_id}/iterations", tags=["Iterations"])
@@ -119,11 +119,20 @@ async def create_iteration(
     # Баг 5: проверка перекрытия
     await validate_no_overlap(project_id, iteration_data.start_date, iteration_data.end_date, db)
 
+    today = datetime.now().date()
+    if iteration_data.end_date < today:
+        iteration_state = IterationState.PAST
+    elif iteration_data.start_date > today:
+        iteration_state = IterationState.FUTURE
+    else:
+        iteration_state = IterationState.CURRENT
+
     iteration = Iteration(
         project_id=project_id,
         name=iteration_data.name,
         start_date=iteration_data.start_date,
         end_date=iteration_data.end_date,
+        state=iteration_state,
         goal=iteration_data.goal,
         working_days=[d.isoformat() for d in iteration_data.working_days]
     )
