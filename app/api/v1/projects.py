@@ -1,6 +1,6 @@
-from typing import List
+from typing import List, Optional
 from uuid import UUID
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, func, update
 from sqlalchemy.orm import selectinload
@@ -17,24 +17,35 @@ from app.schemas.schemas import (
 
 router = APIRouter(prefix="/projects", tags=["Projects"])
 
-async def get_user_projects_query(user: User, db: AsyncSession):
+async def get_user_projects_query(
+    user: User,
+    db: AsyncSession,
+    is_active: Optional[bool] = None,
+):
     """Get projects accessible to user."""
     if user.role == UserRole.ADMINISTRATOR:
-        return select(Project).where(Project.is_active == True)
+        query = select(Project)
+        if is_active is not None:
+            query = query.where(Project.is_active == is_active)
+        return query
 
-    return (
+    query = (
         select(Project)
         .join(ProjectMember, ProjectMember.project_id == Project.id)
-        .where(ProjectMember.user_id == user.id, Project.is_active == True)
+        .where(ProjectMember.user_id == user.id)
     )
+    if is_active is not None:
+        query = query.where(Project.is_active == is_active)
+    return query
 
 @router.get("", response_model=List[ProjectResponse])
 async def list_projects(
+    is_active: Optional[bool] = Query(None, description="Filter projects by active status"),
     db: AsyncSession = Depends(get_db),
     current_user: User = Depends(get_current_user)
 ):
     """List projects accessible to current user."""
-    query = await get_user_projects_query(current_user, db)
+    query = await get_user_projects_query(current_user, db, is_active=is_active)
     result = await db.execute(query.order_by(Project.created_date.desc()))
     projects = result.scalars().all()
 
