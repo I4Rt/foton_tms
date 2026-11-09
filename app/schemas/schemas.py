@@ -486,3 +486,11 @@ class RepositoryResponse(BaseModel):
 
     class Config:
         from_attributes = True
+
+
+class AnalyticsRequest(BaseModel):
+    dt_from: datetime
+    dt_to: datetime
+    user_ids: List[UUID] | None
+    iteration_ids: List[UUID] | None
+    task_ids: List[UUID] | None

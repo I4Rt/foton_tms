@@ -16,6 +16,7 @@ from app.schemas.schemas import (
     ProjectSessionsAnalyticsResponse,
     SessionAnalyticsByUser,
     SessionAnalyticsItem,
+    AnalyticsRequest
 )
 
 
@@ -152,17 +153,19 @@ async def list_sessions_with_filters(
     return result.scalars().all()
 
 
-@router.get("/projects/{project_id}/sessions/analytics", response_model=ProjectSessionsAnalyticsResponse)
+@router.post("/projects/{project_id}/sessions/analytics", response_model=ProjectSessionsAnalyticsResponse)
 async def get_project_sessions_analytics(
     project_id: UUID,
-    dt_from: datetime = Query(..., alias="from", description="Start datetime (inclusive)"),
-    dt_to: datetime = Query(..., alias="to", description="End datetime (inclusive)"),
-    user_ids: List[UUID] | None = Query(None, alias="user_id", description="Users filter"),
-    iteration_ids: List[UUID] | None = Query(None, alias="iteration_id", description="Iterations filter"),
-    task_ids: List[UUID] | None = Query(None, alias="task_id", description="Tasks filter"),
+    analitycs_request: AnalyticsRequest,
     db: AsyncSession = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
+    dt_from       = analitycs_request.dt_from
+    dt_to         = analitycs_request.dt_to
+    user_ids      = analitycs_request.user_ids
+    iteration_ids = analitycs_request.iteration_ids
+    task_ids      = analitycs_request.task_ids
+    
     """Project sessions analytics with strict access and strict filter validation."""
     if dt_from > dt_to:
         raise HTTPException(
